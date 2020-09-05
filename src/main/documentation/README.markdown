@@ -1,0 +1,220 @@
+# Injector for demos
+
+<!-- Documentation generated from `src/main/documentation/README.markdown`. Do not edit directly. -->
+
+This injector is used to demo
+[elasticsearch](https://www.elastic.co/products/elasticsearch) and [Kibana](https://www.elastic.co/products/kibana).
+
+| Injector | elasticsearch | Release date |
+|:---------|:--------------|:------------:|
+| 7.0      | 7.0.0         |  2019-04-11  |
+| 7.0*     | 7.0.0-rc1     |  2019-04-03  |
+| 7.0*     | 7.0.0-beta1   |  2019-02-15  |
+| 6.5      | 6.5.1         |  2018-12-03  |
+| 6.4.2    | 6.4.2         |  2018-10-03  |
+| 6.4      | 6.4.0         |  2018-09-06  |
+| 6.2      | 6.2.3         |  2018-04-09  |
+| 6.0      | 6.0.0-alpha1  |  2017-05-10  |
+| 5.3      | 5.3.2         |  2017-05-05  |
+| 5.0      | 5.0.0         |  2016-10-03  |
+| 5.0      | 5.0.0         |  2016-03-31  |
+| 5.0      | 5.0.0-alpha1  |  2016-03-30  |
+| 3.2      | 2.2.0         |  2016-02-05  |
+| 3.1      | 2.1.0         |  2015-11-27  |
+| 3.0      | 2.0.0         |  2015-11-12  |
+| 2.10     | 1.7.1         |  2015-09-07  |
+| 2.9      | 1.6.0         |  2015-06-15  |
+| 2.8      | 1.5.2         |  2015-06-01  |
+| 2.7      | 1.4.4         |  2015-02-24  |
+| 2.6      | 1.4.0         |  2014-11-19  |
+| 2.5      | 1.3.2         |  2014-09-02  |
+| 2.4      | 1.2.0         |  2014-05-26  |
+| 2.3      | 1.1.1         |  2014-05-06  |
+| 2.2      | 1.1.0         |  2014-04-01  |
+| 2.1      | 1.0.0         |  2014-03-21  |
+| 2.1.RC2  | 1.0.0.RC2     |  2014-02-04  |
+| 2.1.RC1  | 1.0.0.RC1     |  2014-01-23  |
+| 1.1      | 0.90.6        |  2013-11-05  |
+| 1.0      | 0.90.5        |  2013-10-01  |
+
+`*` Broken version 
+
+Usage
+=====
+
+```sh
+# Download it
+wget http://TODO-REPLACE-URL/${project.build.finalName}.jar
+
+# Launch it (with all default settings)
+java -jar ${project.build.finalName}.jar
+```
+
+With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
+http://127.0.0.1:9200 with default password `changeme` for user named `elastic`.
+
+Injector comes with the following implementations:
+
+* Elasticsearch (`--elasticsearch` flag), where you want to index generated data to an elasticsearch cluster running locally or on [cloud](https://cloud.elastic.co/).
+* App Search (`--appsearch` flag), where you want to index generated data to the [App Search service](https://app.swiftype.com/as).
+* Console (`--console` flag), where you want to just print on the console generated data.
+
+For both, you can configure `--nb` option to define the number of documents you'd like to generate
+(defaults to `1000000`).
+Also `--bulk` option can be set to define how many documents should be sent at once (defaults to `10000`).
+
+For example:
+
+```sh
+java -jar ${project.build.finalName}.jar --nb 1000 --bulk 100
+```
+
+If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
+and will set `--elasticsearch` flag for you.
+
+Elasticsearch service
+---------------------
+
+When running an Elasticsearch instance, local or on [cloud.elastic.co](https://cloud.elastic.co/), you can define other options.
+
+To define the host to send the data to, set `--es.host` option (defaults to `http://127.0.0.1:9200`):
+
+```sh
+java -jar ${project.build.finalName}.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+```
+
+If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
+(defaults to `elastic`) and `--es.password` to define your credentials.
+
+```sh
+java -jar ${project.build.finalName}.jar --elasticsearch --es.user elastic --es.pass changeme
+```
+
+If you don't provide the `--es.password` you'll be prompted to enter it.
+
+If you'd like to index your data in another index than `person` (default one), use `--es.index`:
+
+```sh
+java -jar ${project.build.finalName}.jar --elasticsearch --es.index person
+```
+
+App Search service
+------------------
+
+When sending documents to the [App Search service](https://app.swiftype.com/as), you must specify `--ap.host` and
+`--app.key` which are available from the [credentials page](https://app.swiftype.com/as/credentials):
+
+```sh
+java -jar ${project.build.finalName}.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
+```
+
+If you don't provide the `--app.key` you'll be prompted to enter it.
+
+Optionally you can set [the engine](https://app.swiftype.com/as/engines) you wish to use by using `--ap.engine` option.
+It defaults to `person` and if not existing when the injector starts, it will be created automatically.
+
+```sh
+java -jar ${project.build.finalName}.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
+```
+
+The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
+of the App Search service, the injector will automatically adapt itself to use respectively `100000` and `100` (the limits).
+
+Console
+-------
+
+When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
+
+```sh
+java -jar ${project.build.finalName}.jar --console --cs.pretty
+```
+
+By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
+If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
+
+```sh
+java -jar ${project.build.finalName}.jar --console --cs.appsearch
+```
+
+Using all services together
+---------------------------
+
+You can start the injector like this (all options together):
+
+```sh
+java -jar ${project.build.finalName}.jar \
+    --nb 1000 --bulk 100 \
+    --debug \
+    --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
+    --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person \
+    --console --cs.pretty --cs.appsearch
+```
+
+When you build the project with maven, you'll see in `target/scripts` dir an example
+of scripts which you can adapt to your needs.
+
+Debug options
+-------------
+
+You can use `--silent`, `--debug` or `--trace` to change the log level when using the injector.
+That can give you more information when something is failing for example.
+
+
+Documentation
+=============
+
+If you wish to edit the documentation, please edit it in `src/main/documentation`.
+Then run `mvn clean process-resources` to update the one based in the root of this project.
+It will me automatically enriched by the version of the project.
+
+Do not forget to add your changes to git:
+
+```
+git -a .
+```
+
+Developer Guide
+===============
+
+If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
+
+```xml
+<elasticsearch.version>${elasticsearch.version}</elasticsearch.version>
+```
+
+Then compile the project:
+
+```sh
+# Compile
+mvn clean install
+```
+
+Just get the final jar from `target/${project.build.finalName}.jar`. Or:
+
+```sh
+cd target
+```
+
+And launch all the examples from this dir.
+
+
+License
+=======
+
+```
+This software is licensed under the Apache 2 license, quoted below.
+
+Copyright 2009-2020 Elastic <http://www.elastic.co>
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+```
