@@ -99,7 +99,7 @@ public class ElasticsearchInjector extends Injector {
 
         // Create or Update the template
         String schema = readFileInClasspath("/template.json");
-        Request request = new Request("PUT", "/_template/" + index);
+        Request request = new Request("PUT", "/_index_template/" + index);
         request.setJsonEntity(schema);
         lowLevelClient.performRequest(request);
         logger.info("Template [{}] created or updated", index);
