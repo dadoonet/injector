@@ -1,8 +1,5 @@
 {
   "index_patterns": ["person*"],
-  "settings": {
-    "number_of_shards": 5
-  },
   "mappings": {
     "properties": {
       "address": {
@@ -29,7 +26,7 @@
       },
       "dateofbirth": {
         "type": "date",
-        "format": "dateOptionalTime"
+        "format": "date_optional_time"
       },
       "gender": {
         "type": "keyword"
