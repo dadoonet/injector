@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.bean;
+package fr.pilato.elasticsearch.injector.bean;
 
 import java.text.DecimalFormat;
 

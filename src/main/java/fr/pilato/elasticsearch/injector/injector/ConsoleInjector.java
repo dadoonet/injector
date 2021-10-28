@@ -17,15 +17,15 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.injector;
+package fr.pilato.elasticsearch.injector.injector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.pilato.elasticsearch.injector.bean.AppSearchPerson;
+import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.demo.workshop.injector.bean.AppSearchPerson;
-import org.elasticsearch.demo.workshop.injector.bean.Person;
-import org.elasticsearch.demo.workshop.injector.serializer.MetaParser;
+import fr.pilato.elasticsearch.injector.serializer.MetaParser;
 
 import java.util.Collections;
 import java.util.List;

@@ -6,7 +6,7 @@
       </Console>
    </Appenders>
    <Loggers>
-      <Logger name="org.elasticsearch.demo" level="info" additivity="false">
+      <Logger name="fr.pilato.elasticsearch.injector" level="info" additivity="false">
          <AppenderRef ref="CONSOLE"/>
       </Logger>
       <Logger name="com.swiftype.appsearch" level="info" additivity="false">

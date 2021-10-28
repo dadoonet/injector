@@ -17,11 +17,11 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.bean;
+package fr.pilato.elasticsearch.injector.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.elasticsearch.demo.workshop.injector.serializer.CustomDateSerializer;
+import fr.pilato.elasticsearch.injector.serializer.CustomDateSerializer;
 
 import java.util.Date;
 

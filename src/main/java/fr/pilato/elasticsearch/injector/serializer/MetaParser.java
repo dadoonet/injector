@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.serializer;
+package fr.pilato.elasticsearch.injector.serializer;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -37,7 +37,7 @@ public class MetaParser {
 
     static {
         SimpleModule injector = new SimpleModule("injector", new Version(5, 0, 0, null,
-                "org.elasticsearch.demo.workshop", "injector"));
+                "fr.pilato.elasticsearch.injector", "injector"));
 
         prettyMapper = new ObjectMapper();
         prettyMapper.registerModule(new JavaTimeModule());

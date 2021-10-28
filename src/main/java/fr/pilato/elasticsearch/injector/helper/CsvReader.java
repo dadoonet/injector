@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.helper;
+package fr.pilato.elasticsearch.injector.helper;
 
 
 import java.io.*;

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.injector;
+package fr.pilato.elasticsearch.injector.injector;
 
 import co.elastic.clients.base.RestClientTransport;
 import co.elastic.clients.base.Transport;
@@ -44,8 +44,8 @@ import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.demo.workshop.injector.bean.Person;
-import org.elasticsearch.demo.workshop.injector.serializer.MetaParser;
+import fr.pilato.elasticsearch.injector.bean.Person;
+import fr.pilato.elasticsearch.injector.serializer.MetaParser;
 
 import java.io.IOException;
 import java.util.Collections;

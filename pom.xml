@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.elasticsearch.demo.workshop</groupId>
+    <groupId>fr.pilato.elasticsearch.injector</groupId>
     <artifactId>injector</artifactId>
     <version>7.15-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
@@ -46,16 +46,6 @@
         <developerConnection>scm:git:git@github.com:dadoonet/injector.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-
-    <repositories>
-        <repository>
-            <id>elastic-lucene-snapshots</id>
-            <name>Elastic Lucene Snapshots</name>
-            <url>http://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/83f9835</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-    </repositories>
 
     <distributionManagement>
         <repository>
@@ -193,7 +183,7 @@
                             <transformers>
                                 <!-- add Main-Class to manifest file -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.elasticsearch.demo.workshop.injector.runner.Generate</mainClass>
+                                    <mainClass>fr.pilato.elasticsearch.injector.runner.Generate</mainClass>
                                     <manifestEntries>
                                         <Multi-Release>true</Multi-Release>
                                     </manifestEntries>

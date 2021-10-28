@@ -1,4 +1,4 @@
-package org.elasticsearch.demo.workshop.injector.serializer;
+package fr.pilato.elasticsearch.injector.serializer;
 
 
 import com.fasterxml.jackson.core.JsonGenerator;

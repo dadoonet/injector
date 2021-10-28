@@ -17,14 +17,14 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.helper;
+package fr.pilato.elasticsearch.injector.helper;
 
 
+import fr.pilato.elasticsearch.injector.bean.Address;
+import fr.pilato.elasticsearch.injector.bean.GeoPoint;
+import fr.pilato.elasticsearch.injector.bean.Marketing;
+import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.commons.lang3.time.DateUtils;
-import org.elasticsearch.demo.workshop.injector.bean.Address;
-import org.elasticsearch.demo.workshop.injector.bean.GeoPoint;
-import org.elasticsearch.demo.workshop.injector.bean.Marketing;
-import org.elasticsearch.demo.workshop.injector.bean.Person;
 
 import java.io.IOException;
 import java.text.ParseException;

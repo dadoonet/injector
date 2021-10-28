@@ -17,11 +17,11 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.injector;
+package fr.pilato.elasticsearch.injector.injector;
 
+import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.demo.workshop.injector.bean.Person;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

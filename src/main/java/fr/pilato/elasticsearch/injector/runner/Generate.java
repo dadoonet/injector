@@ -17,24 +17,21 @@
  * under the License.
  */
 
-package org.elasticsearch.demo.workshop.injector.runner;
+package fr.pilato.elasticsearch.injector.runner;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import fr.pilato.elasticsearch.injector.bean.Person;
+import fr.pilato.elasticsearch.injector.injector.ElasticsearchInjector;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.elasticsearch.demo.workshop.injector.bean.Person;
-import org.elasticsearch.demo.workshop.injector.helper.PersonGenerator;
-import org.elasticsearch.demo.workshop.injector.injector.AppSearchInjector;
-import org.elasticsearch.demo.workshop.injector.injector.ConsoleInjector;
-import org.elasticsearch.demo.workshop.injector.injector.ElasticsearchInjector;
-import org.elasticsearch.demo.workshop.injector.injector.Injector;
-import org.elasticsearch.demo.workshop.injector.serializer.MetaParser;
+import fr.pilato.elasticsearch.injector.helper.PersonGenerator;
+import fr.pilato.elasticsearch.injector.injector.AppSearchInjector;
+import fr.pilato.elasticsearch.injector.injector.ConsoleInjector;
+import fr.pilato.elasticsearch.injector.injector.Injector;
+import fr.pilato.elasticsearch.injector.serializer.MetaParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +116,7 @@ public class Generate {
                 // We change the full rootLogger level
                 Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.OFF);
             } else {
-                Configurator.setAllLevels("org.elasticsearch.demo", commands.debug ? Level.DEBUG : Level.TRACE);
+                Configurator.setAllLevels("fr.pilato.elasticsearch.injector", commands.debug ? Level.DEBUG : Level.TRACE);
             }
         }
 
