@@ -88,6 +88,13 @@
             <version>${log4j.version}</version>
             <optional>true</optional>
         </dependency>
+        <!-- The new Rest Client -->
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <!-- The old Rest Client -->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
