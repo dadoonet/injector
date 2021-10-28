@@ -1,8 +1,6 @@
-name: Maven Deploy Package
+name: Build PR
 
-on:
-  release:
-    types: [created]
+on: pull_request
 
 jobs:
   build:
@@ -23,9 +21,4 @@ jobs:
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+      run: mvn -B package
