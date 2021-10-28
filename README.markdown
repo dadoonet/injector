@@ -2,15 +2,13 @@
 
 <!-- Documentation generated from `src/main/documentation/README.markdown`. Do not edit directly. -->
 
-This injector is used for Workshops or Demos about
+This injector is used to demo
 [elasticsearch](https://www.elastic.co/products/elasticsearch) and [Kibana](https://www.elastic.co/products/kibana).
-
 
 | Injector | elasticsearch | Release date |
 |:---------|:--------------|:------------:|
+| 7.15     | 7.15.1        |  2021-10-28  |
 | 7.0      | 7.0.0         |  2019-04-11  |
-| 7.0*     | 7.0.0-rc1     |  2019-04-03  |
-| 7.0*     | 7.0.0-beta1   |  2019-02-15  |
 | 6.5      | 6.5.1         |  2018-12-03  |
 | 6.4.2    | 6.4.2         |  2018-10-03  |
 | 6.4      | 6.4.0         |  2018-09-06  |
@@ -45,10 +43,10 @@ Usage
 
 ```sh
 # Download it
-wget http://download.elastic.co/workshops/basic-kibana/injector/injector-7.0.jar
+wget http://TODO-REPLACE-URL/injector-7.15.jar
 
 # Launch it (with all default settings)
-java -jar injector-7.0.jar
+java -jar injector-7.15.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
@@ -67,7 +65,7 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
-java -jar injector-7.0.jar --nb 1000 --bulk 100
+java -jar injector-7.15.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -81,14 +79,14 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `http://127.0.0.1:9200`):
 
 ```sh
-java -jar injector-7.0.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-7.15.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
 (defaults to `elastic`) and `--es.password` to define your credentials.
 
 ```sh
-java -jar injector-7.0.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-7.15.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.password` you'll be prompted to enter it.
@@ -96,7 +94,7 @@ If you don't provide the `--es.password` you'll be prompted to enter it.
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
-java -jar injector-7.0.jar --elasticsearch --es.index person
+java -jar injector-7.15.jar --elasticsearch --es.index person
 ```
 
 App Search service
@@ -106,7 +104,7 @@ When sending documents to the [App Search service](https://app.swiftype.com/as),
 `--app.key` which are available from the [credentials page](https://app.swiftype.com/as/credentials):
 
 ```sh
-java -jar injector-7.0.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
+java -jar injector-7.15.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
 ```
 
 If you don't provide the `--app.key` you'll be prompted to enter it.
@@ -115,7 +113,7 @@ Optionally you can set [the engine](https://app.swiftype.com/as/engines) you wis
 It defaults to `person` and if not existing when the injector starts, it will be created automatically.
 
 ```sh
-java -jar injector-7.0.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
+java -jar injector-7.15.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
 ```
 
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
@@ -127,14 +125,14 @@ Console
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
-java -jar injector-7.0.jar --console --cs.pretty
+java -jar injector-7.15.jar --console --cs.pretty
 ```
 
 By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
 If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
 
 ```sh
-java -jar injector-7.0.jar --console --cs.appsearch
+java -jar injector-7.15.jar --console --cs.appsearch
 ```
 
 Using all services together
@@ -143,7 +141,7 @@ Using all services together
 You can start the injector like this (all options together):
 
 ```sh
-java -jar injector-7.0.jar \
+java -jar injector-7.15.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
@@ -180,7 +178,7 @@ Developer Guide
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>7.0.0</elasticsearch.version>
+<elasticsearch.version>7.15.1</elasticsearch.version>
 ```
 
 Then compile the project:
@@ -190,7 +188,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-7.0.jar`. Or:
+Just get the final jar from `target/injector-7.15.jar`. Or:
 
 ```sh
 cd target
@@ -205,7 +203,7 @@ License
 ```
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2009-2020 Elastic <http://www.elastic.co>
+Copyright 2009-2021 Elastic <http://www.elastic.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of

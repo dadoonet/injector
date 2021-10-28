@@ -7,6 +7,7 @@ This injector is used to demo
 
 | Injector | elasticsearch | Release date |
 |:---------|:--------------|:------------:|
+| 7.15     | 7.15.1        |  2021-10-28  |
 | 7.0      | 7.0.0         |  2019-04-11  |
 | 6.5      | 6.5.1         |  2018-12-03  |
 | 6.4.2    | 6.4.2         |  2018-10-03  |
@@ -202,7 +203,7 @@ License
 ```
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2009-2020 Elastic <http://www.elastic.co>
+Copyright 2009-2021 Elastic <http://www.elastic.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
