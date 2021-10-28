@@ -42,8 +42,12 @@ Usage
 =====
 
 ```sh
-# Download it
-wget http://TODO-REPLACE-URL/injector-7.15.jar
+# Download it (this can not be done as Github does not support public maven access)
+# wget http://TODO-REPLACE-URL/injector-7.15.jar
+
+# So we need to manually download the jar file from the packages. Find
+# injector-7.16-SNAPSHOT.jar on the right 
+open https://github.com/dadoonet/injector/packages/
 
 # Launch it (with all default settings)
 java -jar injector-7.15.jar
