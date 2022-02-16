@@ -4,7 +4,7 @@
 
     <groupId>fr.pilato.elasticsearch.injector</groupId>
     <artifactId>injector</artifactId>
-    <version>7.16-SNAPSHOT</version>
+    <version>8.0-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
     <description>Injector for Demos</description>
     <inceptionYear>2013</inceptionYear>
@@ -35,7 +35,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.13.1</jackson.version>
         <log4j.version>2.17.1</log4j.version>
-        <elasticsearch.version>7.15.1</elasticsearch.version>
+        <elasticsearch.version>8.0.0</elasticsearch.version>
+
+        <!-- For integration tests using Docker Compose or external cluster -->
+        <contrib.dir>${project.basedir}/contrib</contrib.dir>
+        <integ.elasticsearch.image>docker.elastic.co/elasticsearch/elasticsearch</integ.elasticsearch.image>
+        <integ.elasticsearch.version>${elasticsearch.version}</integ.elasticsearch.version>
+        <integ.elasticsearch.port>9200</integ.elasticsearch.port>
+        <tests.cluster.url></tests.cluster.url>
+        <tests.cluster.user>elastic</tests.cluster.user>
+        <tests.cluster.pass>changeme</tests.cluster.pass>
     </properties>
 
     <scm>
@@ -96,22 +105,6 @@
             <artifactId>elasticsearch-java</artifactId>
             <version>${elasticsearch.version}</version>
         </dependency>
-        <!-- The old Rest Client -->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>${elasticsearch.version}</version>
-            <exclusions>
-                <!--
-                    Excluding because this is generating java.lang.SecurityException:
-                    Invalid signature file digest for Manifest main attributes
-                    -->
-                <exclusion>
-                    <groupId>org.locationtech.spatial4j</groupId>
-                    <artifactId>spatial4j</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <!-- For CLI -->
         <dependency>
@@ -155,8 +148,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>17</source>
+                    <target>17</target>
                     <encoding>UTF-8</encoding>
                     <optimize>true</optimize>
                     <showDeprecation>true</showDeprecation>
