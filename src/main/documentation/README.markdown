@@ -173,7 +173,7 @@ It will be automatically enriched by the version of the project.
 Do not forget to add your changes to git:
 
 ```
-git -a .
+git commit -a -m "Update documentation"
 ```
 
 Developer Guide
@@ -208,7 +208,7 @@ To release the project you need to run the release plugin with the `release` pro
 ```sh
 mvn release:prepare
 mvn process-resources
-git -a .
+git commit -a -m "Update documentation"
 git push --tags
 git push
 mvn release:perform -Prelease
