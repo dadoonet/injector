@@ -7,6 +7,7 @@
     <version>8.0-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
     <description>Injector for Demos</description>
+    <url>https://github.com/dadoonet/injector</url>
     <inceptionYear>2013</inceptionYear>
 
     <licenses>
