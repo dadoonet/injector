@@ -201,6 +201,31 @@ cd target
 And launch all the examples from this dir.
 
 
+Release guide
+=============
+
+To release the project you need to run the release plugin with the `release` profile as you need to sign the artifacts:
+
+```sh
+mvn release:prepare
+git push --tags
+git push
+mvn release:perform -Prelease
+```
+
+If you need to skip the tests, run:
+
+```sh
+mvn release:perform -Prelease -Darguments="-DskipTests"
+```
+
+If everything is ok in https://s01.oss.sonatype.org/#stagingRepositories, you can perform the release with:
+
+```sh
+mvn nexus-staging:release
+mvn nexus-staging:drop
+```
+
 License
 =======
 
