@@ -173,12 +173,11 @@ Documentation
 =============
 
 If you wish to edit the documentation, please edit it in `src/main/documentation`.
-Then run `mvn clean process-resources` to update the one based in the root of this project.
-It will be automatically enriched by the version of the project.
 
-Do not forget to add your changes to git:
+Then run the following commands to update the README in the root of this project and commit your changes:
 
-```
+```shell
+mvn clean process-resources
 git commit -a -m "Update documentation"
 ```
 

@@ -39,18 +39,24 @@ This injector is used to demo
 
 `*` Broken version 
 
+Status
+======
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/)
+[![Build and Deploy the main branch](https://github.com/dadoonet/injector/actions/workflows/main.yml/badge.svg)](https://github.com/dadoonet/injector/actions/workflows/main.yml)
+
 Usage
 =====
 
 If you are looking for a SNAPSHOT version, please look into 
-https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.0/
+https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.1-SNAPSHOT/
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/8.0/injector-8.0.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/8.1-SNAPSHOT/injector-8.1-SNAPSHOT.jar
 
 # Launch it (with all default settings)
-java -jar injector-8.0.jar
+java -jar injector-8.1-SNAPSHOT.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
@@ -69,7 +75,7 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
-java -jar injector-8.0.jar --nb 1000 --bulk 100
+java -jar injector-8.1-SNAPSHOT.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -83,14 +89,14 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
-java -jar injector-8.0.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-8.1-SNAPSHOT.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
 (defaults to `elastic`) and `--es.password` to define your credentials.
 
 ```sh
-java -jar injector-8.0.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-8.1-SNAPSHOT.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.password` you'll be prompted to enter it.
@@ -98,7 +104,7 @@ If you don't provide the `--es.password` you'll be prompted to enter it.
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
-java -jar injector-8.0.jar --elasticsearch --es.index person
+java -jar injector-8.1-SNAPSHOT.jar --elasticsearch --es.index person
 ```
 
 App Search service
@@ -108,7 +114,7 @@ When sending documents to the [App Search service](https://app.swiftype.com/as),
 `--app.key` which are available from the [credentials page](https://app.swiftype.com/as/credentials):
 
 ```sh
-java -jar injector-8.0.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
+java -jar injector-8.1-SNAPSHOT.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
 ```
 
 If you don't provide the `--app.key` you'll be prompted to enter it.
@@ -117,7 +123,7 @@ Optionally you can set [the engine](https://app.swiftype.com/as/engines) you wis
 It defaults to `person` and if not existing when the injector starts, it will be created automatically.
 
 ```sh
-java -jar injector-8.0.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
+java -jar injector-8.1-SNAPSHOT.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
 ```
 
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
@@ -129,14 +135,14 @@ Console
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
-java -jar injector-8.0.jar --console --cs.pretty
+java -jar injector-8.1-SNAPSHOT.jar --console --cs.pretty
 ```
 
 By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
 If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
 
 ```sh
-java -jar injector-8.0.jar --console --cs.appsearch
+java -jar injector-8.1-SNAPSHOT.jar --console --cs.appsearch
 ```
 
 Using all services together
@@ -145,7 +151,7 @@ Using all services together
 You can start the injector like this (all options together):
 
 ```sh
-java -jar injector-8.0.jar \
+java -jar injector-8.1-SNAPSHOT.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
@@ -167,12 +173,11 @@ Documentation
 =============
 
 If you wish to edit the documentation, please edit it in `src/main/documentation`.
-Then run `mvn clean process-resources` to update the one based in the root of this project.
-It will be automatically enriched by the version of the project.
 
-Do not forget to add your changes to git:
+Then run the following commands to update the README in the root of this project and commit your changes:
 
-```
+```shell
+mvn clean process-resources
 git commit -a -m "Update documentation"
 ```
 
@@ -192,7 +197,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-8.0.jar`. Or:
+Just get the final jar from `target/injector-8.1-SNAPSHOT.jar`. Or:
 
 ```sh
 cd target
