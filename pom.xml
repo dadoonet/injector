@@ -222,6 +222,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
                 <configuration>
+                    <preparationGoals>clean process-resources</preparationGoals>
                     <pushChanges>false</pushChanges>
                 </configuration>
             </plugin>

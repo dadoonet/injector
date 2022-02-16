@@ -207,8 +207,6 @@ To release the project you need to run the release plugin with the `release` pro
 
 ```sh
 mvn release:prepare
-mvn process-resources
-git commit -a -m "Update documentation"
 git push --tags
 git push
 mvn release:perform -Prelease
