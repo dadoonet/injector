@@ -32,9 +32,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.nio.conn.NoopIOSessionStrategy;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.logging.log4j.LogManager;
@@ -42,7 +40,6 @@ import org.apache.logging.log4j.Logger;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RestClient;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -130,10 +127,8 @@ public class ElasticsearchInjector extends Injector {
                     response.items()
                             .stream()
                             .filter(i -> i.error() != null)
-                            .forEach(item -> {
-                                logger.debug("Error for {}/{} for {} operation: {}",
-                                        item.index(), item.id(), item.operationType(), item.error().reason());
-                            });
+                            .forEach(item -> logger.debug("Error for {}/{} for {} operation: {}",
+                                    item.index(), item.id(), item.operationType(), item.error().reason()));
                 }
             }
 
