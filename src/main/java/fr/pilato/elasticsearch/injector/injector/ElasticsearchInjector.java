@@ -19,76 +19,76 @@
 
 package fr.pilato.elasticsearch.injector.injector;
 
-import co.elastic.clients.base.RestClientTransport;
-import co.elastic.clients.base.Transport;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch._core.InfoResponse;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.InfoResponse;
+import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
+import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.nio.conn.NoopIOSessionStrategy;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkProcessor;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Request;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.core.TimeValue;
-import fr.pilato.elasticsearch.injector.bean.Person;
-import fr.pilato.elasticsearch.injector.serializer.MetaParser;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ElasticsearchInjector extends Injector {
 
     private static final Logger logger = LogManager.getLogger(ElasticsearchInjector.class);
     private final RestClient lowLevelClient;
-    private final RestHighLevelClient oldClient;
     private final ElasticsearchClient client;
-    private final BulkProcessor bulkProcessor;
+    private final ElasticsearchTransport transport;
     private final String index;
+    private final int bulkSize;
+    private List<BulkOperation> bulkOperations;
 
     public ElasticsearchInjector(String index, int bulkSize, String host, String username, String password) {
         logger.info("Using Elasticsearch backend running at {} with bulk size of {} documents in index {}", host, bulkSize, index);
         this.index = index;
-        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-        RestClientBuilder builder = RestClient
-                .builder(HttpHost.create(host))
-                .setHttpClientConfigCallback(hcb -> hcb.setDefaultCredentialsProvider(credentialsProvider));
+        this.bulkSize = bulkSize;
 
-        // Create the old client
-        oldClient = new RestHighLevelClient(builder);
+        try {
+            SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(null, (x509Certificates, s) -> true);
+            final SSLContext sslContext = sslBuilder.build();
 
-        // Our low level client
-        // In the future, just use builder.build() instead of client.getLowLevelClient()
-        lowLevelClient = oldClient.getLowLevelClient();
+            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+            credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+            lowLevelClient = RestClient
+                    .builder(HttpHost.create(host))
+                    .setHttpClientConfigCallback(hcb -> hcb
+                            .setSSLContext(sslContext)
+                            .setDefaultCredentialsProvider(credentialsProvider)
+                    )
+                    .build();
 
-        // Create the new client (using the low level client)
-        Transport transport = new RestClientTransport(lowLevelClient, new JacksonJsonpMapper());
-        client = new ElasticsearchClient(transport);
+            // Create the new client (using the low level client)
+            transport = new RestClientTransport(lowLevelClient, new JacksonJsonpMapper());
+            client = new ElasticsearchClient(transport);
+        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
+            throw new RuntimeException(e);
+        }
 
-        // The bulk processor is only available in the old client for now.
-        // It will be added in 8.x
-        bulkProcessor = BulkProcessor.builder(
-                (request, bulkListener) -> oldClient.bulkAsync(request, RequestOptions.DEFAULT, bulkListener),
-                new SimpleLoggerListener(), "persons")
-                .setBulkActions(bulkSize)
-                .setFlushInterval(TimeValue.timeValueSeconds(5))
-                .build();
+        bulkOperations = new ArrayList<>(bulkSize);
     }
 
     @Override
@@ -112,58 +112,49 @@ public class ElasticsearchInjector extends Injector {
 
     @Override
     public void inject(int finalI, Person person) {
+        bulkOperations.add(IndexOperation.of(c -> c.document(person))._toBulkOperation());
+        if (bulkOperations.size() >= bulkSize) {
+            doExecute();
+            bulkOperations = new ArrayList<>(bulkSize);
+        }
+    }
+
+    private void doExecute() {
         try {
-            bulkProcessor.add(new IndexRequest(index).source(MetaParser.mapper.writeValueAsString(person), XContentType.JSON));
-        } catch (JsonProcessingException e) {
-            logger.warn("Can not serialize to JSON", e);
+            logger.debug("Going to execute new bulk composed of {} actions", bulkOperations.size());
+            BulkResponse response = client.bulk(r -> r.index(index).operations(bulkOperations));
+            logger.debug("Executed bulk composed of {} actions", bulkOperations.size());
+            if (response.errors()) {
+                logger.warn("There was failures while executing bulk");
+                if (logger.isDebugEnabled()) {
+                    response.items()
+                            .stream()
+                            .filter(i -> i.error() != null)
+                            .forEach(item -> {
+                                logger.debug("Error for {}/{} for {} operation: {}",
+                                        item.index(), item.id(), item.operationType(), item.error().reason());
+                            });
+                }
+            }
+
+        } catch (Throwable t) {
+            logger.warn("Error executing bulk", t);
         }
     }
 
     @Override
     public void close() {
         logger.debug("Closing the injector");
-        if (bulkProcessor != null) {
-            bulkProcessor.flush();
-            try {
-                bulkProcessor.awaitClose(30, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Can not close properly the bulk processor, e");
-            }
+        if (!bulkOperations.isEmpty()) {
+            doExecute();
         }
-        if (oldClient != null) {
+
+        if (client != null) {
             try {
-                oldClient.close();
+                transport.close();
             } catch (IOException e) {
                 throw new RuntimeException("Can not close properly the elasticsearch Rest Client, e");
             }
-        }
-    }
-
-    static class SimpleLoggerListener implements BulkProcessor.Listener {
-        @Override
-        public void beforeBulk(long executionId, BulkRequest request) {
-            logger.debug("Going to execute new bulk composed of {} actions", request.numberOfActions());
-        }
-
-        @Override
-        public void afterBulk(long executionId, BulkRequest request, BulkResponse response) {
-            logger.debug("Executed bulk composed of {} actions", request.numberOfActions());
-            if (response.hasFailures()) {
-                logger.warn("There was failures while executing bulk: {}", response.buildFailureMessage());
-                if (logger.isDebugEnabled()) {
-                    for (BulkItemResponse item : response.getItems()) {
-                        if (item.isFailed()) {
-                            logger.debug("Error for {}/{}/{} for {} operation: {}", item.getIndex(),
-                                    item.getType(), item.getId(), item.getOpType(), item.getFailureMessage());
-                        }
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void afterBulk(long executionId, BulkRequest request, Throwable failure) {
-            logger.warn("Error executing bulk", failure);
         }
     }
 }

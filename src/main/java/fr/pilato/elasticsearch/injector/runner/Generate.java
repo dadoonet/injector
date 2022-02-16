@@ -67,7 +67,7 @@ public class Generate {
         private boolean elasticsearch = false;
 
         @Parameter(names = "--es.host", description = "Elasticsearch host.")
-        private String esHost = "http://127.0.0.1:9200";
+        private String esHost = "https://127.0.0.1:9200";
 
         @Parameter(names = "--es.index", description = "Elasticsearch index name.")
         private String esIndex = "person";
