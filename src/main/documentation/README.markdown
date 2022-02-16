@@ -39,6 +39,12 @@ This injector is used to demo
 
 `*` Broken version 
 
+Status
+======
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/)
+[![Build and Deploy the main branch](https://github.com/dadoonet/injector/actions/workflows/main.yml/badge.svg)](https://github.com/dadoonet/injector/actions/workflows/main.yml)
+
 Usage
 =====
 
