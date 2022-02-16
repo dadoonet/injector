@@ -5,56 +5,56 @@
 This injector is used to demo
 [elasticsearch](https://www.elastic.co/products/elasticsearch) and [Kibana](https://www.elastic.co/products/kibana).
 
-| Injector | elasticsearch | Release date |
-|:---------|:--------------|:------------:|
-| 7.15     | 7.15.1        |  2021-10-28  |
-| 7.0      | 7.0.0         |  2019-04-11  |
-| 6.5      | 6.5.1         |  2018-12-03  |
-| 6.4.2    | 6.4.2         |  2018-10-03  |
-| 6.4      | 6.4.0         |  2018-09-06  |
-| 6.2      | 6.2.3         |  2018-04-09  |
-| 6.0      | 6.0.0-alpha1  |  2017-05-10  |
-| 5.3      | 5.3.2         |  2017-05-05  |
-| 5.0      | 5.0.0         |  2016-10-03  |
-| 5.0      | 5.0.0         |  2016-03-31  |
-| 5.0      | 5.0.0-alpha1  |  2016-03-30  |
-| 3.2      | 2.2.0         |  2016-02-05  |
-| 3.1      | 2.1.0         |  2015-11-27  |
-| 3.0      | 2.0.0         |  2015-11-12  |
-| 2.10     | 1.7.1         |  2015-09-07  |
-| 2.9      | 1.6.0         |  2015-06-15  |
-| 2.8      | 1.5.2         |  2015-06-01  |
-| 2.7      | 1.4.4         |  2015-02-24  |
-| 2.6      | 1.4.0         |  2014-11-19  |
-| 2.5      | 1.3.2         |  2014-09-02  |
-| 2.4      | 1.2.0         |  2014-05-26  |
-| 2.3      | 1.1.1         |  2014-05-06  |
-| 2.2      | 1.1.0         |  2014-04-01  |
-| 2.1      | 1.0.0         |  2014-03-21  |
-| 2.1.RC2  | 1.0.0.RC2     |  2014-02-04  |
-| 2.1.RC1  | 1.0.0.RC1     |  2014-01-23  |
-| 1.1      | 0.90.6        |  2013-11-05  |
-| 1.0      | 0.90.5        |  2013-10-01  |
+| Injector     | elasticsearch | Release date |
+|:-------------|:--------------|:------------:|
+| 8.0-SNAPSHOT | 8.0.0         |              |
+| 7.15         | 7.15.1        |  2021-10-28  |
+| 7.0          | 7.0.0         |  2019-04-11  |
+| 6.5          | 6.5.1         |  2018-12-03  |
+| 6.4.2        | 6.4.2         |  2018-10-03  |
+| 6.4          | 6.4.0         |  2018-09-06  |
+| 6.2          | 6.2.3         |  2018-04-09  |
+| 6.0          | 6.0.0-alpha1  |  2017-05-10  |
+| 5.3          | 5.3.2         |  2017-05-05  |
+| 5.0          | 5.0.0         |  2016-10-03  |
+| 5.0          | 5.0.0         |  2016-03-31  |
+| 5.0          | 5.0.0-alpha1  |  2016-03-30  |
+| 3.2          | 2.2.0         |  2016-02-05  |
+| 3.1          | 2.1.0         |  2015-11-27  |
+| 3.0          | 2.0.0         |  2015-11-12  |
+| 2.10         | 1.7.1         |  2015-09-07  |
+| 2.9          | 1.6.0         |  2015-06-15  |
+| 2.8          | 1.5.2         |  2015-06-01  |
+| 2.7          | 1.4.4         |  2015-02-24  |
+| 2.6          | 1.4.0         |  2014-11-19  |
+| 2.5          | 1.3.2         |  2014-09-02  |
+| 2.4          | 1.2.0         |  2014-05-26  |
+| 2.3          | 1.1.1         |  2014-05-06  |
+| 2.2          | 1.1.0         |  2014-04-01  |
+| 2.1          | 1.0.0         |  2014-03-21  |
+| 2.1.RC2      | 1.0.0.RC2     |  2014-02-04  |
+| 2.1.RC1      | 1.0.0.RC1     |  2014-01-23  |
+| 1.1          | 0.90.6        |  2013-11-05  |
+| 1.0          | 0.90.5        |  2013-10-01  |
 
 `*` Broken version 
 
 Usage
 =====
 
-```sh
-# Download it (this can not be done as Github does not support public maven access)
-# wget http://TODO-REPLACE-URL/injector-8.0-SNAPSHOT.jar
+If you are looking for a SNAPSHOT version, please look into 
+https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.0-SNAPSHOT/
 
-# So we need to manually download the jar file from the packages. Find
-# injector-8.0-SNAPSHOT.jar on the right 
-open https://github.com/dadoonet/injector/packages/
+```sh
+# Download it from maven central
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/8.0-SNAPSHOT/injector-8.0-SNAPSHOT.jar
 
 # Launch it (with all default settings)
 java -jar injector-8.0-SNAPSHOT.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
-http://127.0.0.1:9200 with default password `changeme` for user named `elastic`.
+https://127.0.0.1:9200 with default password `changeme` for user named `elastic`.
 
 Injector comes with the following implementations:
 
@@ -80,7 +80,7 @@ Elasticsearch service
 
 When running an Elasticsearch instance, local or on [cloud.elastic.co](https://cloud.elastic.co/), you can define other options.
 
-To define the host to send the data to, set `--es.host` option (defaults to `http://127.0.0.1:9200`):
+To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
 java -jar injector-8.0-SNAPSHOT.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
@@ -168,7 +168,7 @@ Documentation
 
 If you wish to edit the documentation, please edit it in `src/main/documentation`.
 Then run `mvn clean process-resources` to update the one based in the root of this project.
-It will me automatically enriched by the version of the project.
+It will be automatically enriched by the version of the project.
 
 Do not forget to add your changes to git:
 
@@ -200,6 +200,32 @@ cd target
 
 And launch all the examples from this dir.
 
+Release guide
+=============
+
+To release the project you need to run the release plugin with the `release` profile as you need to sign the artifacts:
+
+```sh
+mvn release:prepare
+mvn process-resources
+git -a .
+git push --tags
+git push
+mvn release:perform -Prelease
+```
+
+If you need to skip the tests, run:
+
+```sh
+mvn release:perform -Prelease -Darguments="-DskipTests"
+```
+
+If everything is ok in https://s01.oss.sonatype.org/#stagingRepositories, you can perform the release with:
+
+```sh
+mvn nexus-staging:release
+mvn nexus-staging:drop
+```
 
 License
 =======
