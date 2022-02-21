@@ -107,6 +107,21 @@ If you'd like to index your data in another index than `person` (default one), u
 java -jar ${project.build.finalName}.jar --elasticsearch --es.index person
 ```
 
+If you want to use Kibana to display the information that have been generated, you can import the following
+files into Kibana using `Stack Management -> Kibana -> Saved Objects` menu and click on "Import":
+
+* Index pattern, Visualizations, Maps, Dashboard: https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-dashboard.ndjson
+* Canvas example: https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-canvas.ndjson
+
+Example of the Persons dataset dashboard:
+
+![Persons dataset dashboard](images/dashboard.png "Persons dataset dashboard")
+
+Example of the Canvas presentation:
+
+![Canvas presentation](images/canvas.png "Canvas presentation")
+
+
 App Search service
 ------------------
 
