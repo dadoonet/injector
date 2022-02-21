@@ -25,7 +25,7 @@
         "children": {
           "type": "long"
         },
-        "dateofbirth": {
+        "dateOfBirth": {
           "type": "date",
           "format": "date_optional_time"
         },
