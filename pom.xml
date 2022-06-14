@@ -216,7 +216,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
-                <version>1.12.2</version>
+                <version>1.13.0</version>
                 <configuration>
                     <message>[maven-release-plugin] prepare release v${project.version}</message>
                     <pushChanges>false</pushChanges>
