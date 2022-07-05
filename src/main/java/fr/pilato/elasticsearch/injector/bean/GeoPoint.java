@@ -23,6 +23,10 @@ public class GeoPoint {
     private double lon;
     private double lat;
 
+    public GeoPoint() {
+
+    }
+
     public GeoPoint(double lat, double lon) {
         this.lon = lon;
         this.lat = lat;

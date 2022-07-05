@@ -5,38 +5,37 @@
 This injector is used to demo
 [elasticsearch](https://www.elastic.co/products/elasticsearch) and [Kibana](https://www.elastic.co/products/kibana).
 
-| Injector     | elasticsearch | Release date |
-|:-------------|:--------------|:------------:|
-| 8.1-SNAPSHOT | 8.1.1         |              |
-| 8.0          | 8.0.0         |  2022-02-16  |
-| 7.15         | 7.15.1        |  2021-10-28  |
-| 7.0          | 7.0.0         |  2019-04-11  |
-| 6.5          | 6.5.1         |  2018-12-03  |
-| 6.4.2        | 6.4.2         |  2018-10-03  |
-| 6.4          | 6.4.0         |  2018-09-06  |
-| 6.2          | 6.2.3         |  2018-04-09  |
-| 6.0          | 6.0.0-alpha1  |  2017-05-10  |
-| 5.3          | 5.3.2         |  2017-05-05  |
-| 5.0          | 5.0.0         |  2016-10-03  |
-| 5.0          | 5.0.0         |  2016-03-31  |
-| 5.0          | 5.0.0-alpha1  |  2016-03-30  |
-| 3.2          | 2.2.0         |  2016-02-05  |
-| 3.1          | 2.1.0         |  2015-11-27  |
-| 3.0          | 2.0.0         |  2015-11-12  |
-| 2.10         | 1.7.1         |  2015-09-07  |
-| 2.9          | 1.6.0         |  2015-06-15  |
-| 2.8          | 1.5.2         |  2015-06-01  |
-| 2.7          | 1.4.4         |  2015-02-24  |
-| 2.6          | 1.4.0         |  2014-11-19  |
-| 2.5          | 1.3.2         |  2014-09-02  |
-| 2.4          | 1.2.0         |  2014-05-26  |
-| 2.3          | 1.1.1         |  2014-05-06  |
-| 2.2          | 1.1.0         |  2014-04-01  |
-| 2.1          | 1.0.0         |  2014-03-21  |
-| 2.1.RC2      | 1.0.0.RC2     |  2014-02-04  |
-| 2.1.RC1      | 1.0.0.RC1     |  2014-01-23  |
-| 1.1          | 0.90.6        |  2013-11-05  |
-| 1.0          | 0.90.5        |  2013-10-01  |
+| Injector | elasticsearch | Release date |
+|:---------|:--------------|:------------:|
+| 8.0      | 8.0.0         |  2022-02-16  |
+| 7.15     | 7.15.1        |  2021-10-28  |
+| 7.0      | 7.0.0         |  2019-04-11  |
+| 6.5      | 6.5.1         |  2018-12-03  |
+| 6.4.2    | 6.4.2         |  2018-10-03  |
+| 6.4      | 6.4.0         |  2018-09-06  |
+| 6.2      | 6.2.3         |  2018-04-09  |
+| 6.0      | 6.0.0-alpha1  |  2017-05-10  |
+| 5.3      | 5.3.2         |  2017-05-05  |
+| 5.0      | 5.0.0         |  2016-10-03  |
+| 5.0      | 5.0.0         |  2016-03-31  |
+| 5.0      | 5.0.0-alpha1  |  2016-03-30  |
+| 3.2      | 2.2.0         |  2016-02-05  |
+| 3.1      | 2.1.0         |  2015-11-27  |
+| 3.0      | 2.0.0         |  2015-11-12  |
+| 2.10     | 1.7.1         |  2015-09-07  |
+| 2.9      | 1.6.0         |  2015-06-15  |
+| 2.8      | 1.5.2         |  2015-06-01  |
+| 2.7      | 1.4.4         |  2015-02-24  |
+| 2.6      | 1.4.0         |  2014-11-19  |
+| 2.5      | 1.3.2         |  2014-09-02  |
+| 2.4      | 1.2.0         |  2014-05-26  |
+| 2.3      | 1.1.1         |  2014-05-06  |
+| 2.2      | 1.1.0         |  2014-04-01  |
+| 2.1      | 1.0.0         |  2014-03-21  |
+| 2.1.RC2  | 1.0.0.RC2     |  2014-02-04  |
+| 2.1.RC1  | 1.0.0.RC1     |  2014-01-23  |
+| 1.1      | 0.90.6        |  2013-11-05  |
+| 1.0      | 0.90.5        |  2013-10-01  |
 
 `*` Broken version 
 
@@ -203,7 +202,7 @@ Developer Guide
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>8.0.0</elasticsearch.version>
+<elasticsearch.version>8.3.1</elasticsearch.version>
 ```
 
 Then compile the project:
@@ -252,13 +251,13 @@ License
 ```
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2009-2022 Elastic <https://www.elastic.co>
+Copyright 2009-2022 Elastic <http://www.elastic.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
 the License at
 
-    https://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
