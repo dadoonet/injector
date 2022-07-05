@@ -318,6 +318,7 @@
                 <artifactId>docker-compose-maven-plugin</artifactId>
                 <version>4.0.0</version>
                 <configuration>
+                    <skip>${skipTests}</skip>
                     <envFile>.env</envFile>
                     <envVars>
                         <STACK_VERSION>${integ.elasticsearch.version}</STACK_VERSION>
@@ -361,6 +362,7 @@
                 <artifactId>waitfor-maven-plugin</artifactId>
                 <version>1.4</version>
                 <configuration>
+                    <skip>${skipTests}</skip>
                     <quiet>true</quiet>
                     <chatty>false</chatty>
                     <insecure>true</insecure>
