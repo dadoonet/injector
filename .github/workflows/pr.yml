@@ -21,4 +21,4 @@ jobs:
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
-      run: mvn -B package
+      run: mvn -B verify
