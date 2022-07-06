@@ -3,11 +3,15 @@ package com.swiftype.appsearch;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpHeaders;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidKeyException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,26 +36,18 @@ public class Client {
   private static final Logger logger = LogManager.getLogger(Client.class);
 
   private final String baseUrl;
-  private final String apiKey;
+  private final String username;
+  private final String password;
 
   /**
-   * @param hostIdentifier host identifier to use for base url
-   * @param apiKey api key to use for authentication
+   * @param baseUrl url of the service
+   * @param username elastic username
+   * @param password elastic password
    */
-  public Client(String hostIdentifier, String apiKey) {
-    this(hostIdentifier, apiKey, "https://%s.api.swiftype.com/api/as/v1/");
-  }
-
-  /**
-   * Dev only constructor for hitting dev/private endpoints.
-   *
-   * @param hostIdentifier host identifier to use for base url
-   * @param apiKey api key to use for authentication
-   * @param baseUrlFormatString format string to build a custom base url using host identifier
-   */
-  public Client(String hostIdentifier, String apiKey, String baseUrlFormatString) {
-    this.baseUrl = String.format(baseUrlFormatString, hostIdentifier);
-    this.apiKey = apiKey;
+  public Client(String baseUrl, String username, String password) {
+    this.baseUrl = baseUrl;
+    this.username = username;
+    this.password = password;
   }
 
   /**
@@ -285,11 +280,14 @@ public class Client {
 
   private <T> T makeJsonRequestWithJsonBody(String httpMethod, String path, String body, TypeToken<T> resultType) throws ClientException {
     try {
-      try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+      CredentialsProvider provider = new BasicCredentialsProvider();
+      UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+      provider.setCredentials(AuthScope.ANY, credentials);
+
+      try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build()) {
         HttpDynamicRequestWithBody request = new HttpDynamicRequestWithBody(httpMethod, baseUrl + path);
         request.setHeader("X-Swiftype-Client", "swiftype-app-search-java");
         request.setHeader("X-Swiftype-Client-Version", VERSION);
-        request.setHeader(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", apiKey));
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
         if (body != null) {
@@ -299,7 +297,7 @@ public class Client {
         try (CloseableHttpResponse response = httpClient.execute(request)) {
           int statusCode = response.getStatusLine().getStatusCode();
           if (statusCode < 200 || statusCode > 299) {
-            throw new ClientException(String.format("Error: %d", statusCode));
+            throw new ClientException(statusCode, String.format("Error: %d", statusCode));
           }
           String respBody = EntityUtils.toString(response.getEntity());
           return new Gson().fromJson(respBody, resultType.getType());
@@ -308,10 +306,6 @@ public class Client {
     } catch (IOException e) {
       throw new ClientException("Error making http request", e);
     }
-  }
-
-  String baseUrl() {
-    return this.baseUrl;
   }
 
   private static class HttpDynamicRequestWithBody extends HttpEntityEnclosingRequestBase {
