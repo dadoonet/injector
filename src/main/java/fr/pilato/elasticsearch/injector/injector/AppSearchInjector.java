@@ -39,13 +39,14 @@ public class AppSearchInjector extends Injector {
     private static final int MAX_DOCUMENTS = 100000;
     private final int MAX_BULK_SIZE = 100;
     private final String host;
-    private final String key;
+    private final String username;
+    private final String password;
     private final String engineName;
     private final int bulkSize;
     private Client client;
     private List<String> documents;
 
-    public AppSearchInjector(String engine, String host, String key, int bulkSize) {
+    public AppSearchInjector(String engine, String host, String username, String password, int bulkSize) {
         logger.info("Using App Search service running on {} with bulk size of {} documents in engine named {}", host, bulkSize, engine);
         // Hard limit of the App Search
         if (bulkSize > MAX_BULK_SIZE) {
@@ -55,19 +56,20 @@ public class AppSearchInjector extends Injector {
             this.bulkSize = bulkSize;
         }
         this.host = host;
-        this.key = key;
         this.engineName = engine;
         this.documents = new ArrayList<>();
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     public void internalStart() throws IOException {
         // We check our engine is available
         try {
-            client = new Client(host, key);
+            client = new Client(host, username, password);
             client.getEngine(engineName);
         } catch (ClientException e) {
-            if (e.getMessage().contains("404")) {
+            if (e.getCode() == 404) {
                 // Engine does not exist. Let's create it.
                 try {
                     client.createEngine(engineName);
@@ -91,8 +93,11 @@ public class AppSearchInjector extends Injector {
         if (StringUtils.isBlank(this.host)) {
             errors.add(new IllegalArgumentException("ap.host must be set when using App Search"));
         }
-        if (StringUtils.isBlank(this.key)) {
-            errors.add(new IllegalArgumentException("ap.key must be set when using App Search"));
+        if (StringUtils.isBlank(this.username)) {
+            errors.add(new IllegalArgumentException("es.username must be set when using App Search"));
+        }
+        if (StringUtils.isBlank(this.password)) {
+            errors.add(new IllegalArgumentException("es.password must be set when using App Search"));
         }
         return errors;
     }

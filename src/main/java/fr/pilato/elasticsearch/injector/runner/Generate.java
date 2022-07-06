@@ -86,11 +86,8 @@ public class Generate {
         @Parameter(names = "--ap.engine", description = "App Search Engine name.")
         private String apEngine = "person";
 
-        @Parameter(names = "--ap.host", description = "App Search host identifier.")
-        private String apHost = null;
-
-        @Parameter(names = "--app.key", description = "App Search API key.", password = true, echoInput = true)
-        private String apKey = null;
+        @Parameter(names = "--ap.host", description = "App Search url like http://localhost:3002/api/as/v1/.")
+        private String apHost = "http://localhost:3002/api/as/v1/";
 
         // Console specific options
 
@@ -136,7 +133,9 @@ public class Generate {
                     commands.esUsername, commands.esPassword));
         }
         if (commands.appsearch) {
-            injectors.add(new AppSearchInjector(commands.apEngine, commands.apHost, commands.apKey, commands.bulkSize));
+            injectors.add(new AppSearchInjector(commands.apEngine, commands.apHost,
+                    commands.esUsername, commands.esPassword,
+                    commands.bulkSize));
         }
         if (commands.console) {
             injectors.add(new ConsoleInjector(commands.csPretty, commands.csAppSearch));
