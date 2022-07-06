@@ -4,7 +4,7 @@
 
     <groupId>fr.pilato.elasticsearch.injector</groupId>
     <artifactId>injector</artifactId>
-    <version>8.1-SNAPSHOT</version>
+    <version>8.3-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
     <description>Injector for Demos</description>
     <url>https://github.com/dadoonet/injector</url>
