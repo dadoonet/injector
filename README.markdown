@@ -203,7 +203,7 @@ Developer Guide
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>8.0.0</elasticsearch.version>
+<elasticsearch.version>8.3.1</elasticsearch.version>
 ```
 
 Then compile the project:
