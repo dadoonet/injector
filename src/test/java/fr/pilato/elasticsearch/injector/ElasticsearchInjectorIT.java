@@ -79,7 +79,7 @@ public class ElasticsearchInjectorIT {
 
     @Test
     public void testInjector() throws IOException {
-        client.indices().delete(dir -> dir.index("person"));
+        client.indices().delete(dir -> dir.index("person").ignoreUnavailable(true));
         Generate.main(new String[]{"--elasticsearch", "--nb", "100"});
         client.indices().refresh();
         SearchResponse<Person> response = client.search(sr -> sr.index("person"), Person.class);
