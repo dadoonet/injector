@@ -94,13 +94,13 @@ java -jar injector-8.3-SNAPSHOT.jar --elasticsearch --es.host https://cloud_id.e
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
-(defaults to `elastic`) and `--es.password` to define your credentials.
+(defaults to `elastic`) and `--es.pass` to define your credentials.
 
 ```sh
 java -jar injector-8.3-SNAPSHOT.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
-If you don't provide the `--es.password` you'll be prompted to enter it.
+If you don't provide the `--es.pass` you'll be prompted to enter it.
 
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
@@ -126,20 +126,21 @@ Example of the Canvas presentation:
 App Search service
 ------------------
 
-When sending documents to the [App Search service](https://app.swiftype.com/as), you must specify `--ap.host` and
-`--app.key` which are available from the [credentials page](https://app.swiftype.com/as/credentials):
+When sending documents to the [App Search service](https://www.elastic.co/guide/en/app-search/), you probably need to
+specify `--ap.host`, `--es.user` and `--es.pass`:
 
 ```sh
-java -jar injector-8.3-SNAPSHOT.jar --appsearch --ap.host host-XYZ --app.key private-XYZ
+java -jar injector-8.3-SNAPSHOT.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
 ```
 
-If you don't provide the `--app.key` you'll be prompted to enter it.
+If you don't provide the `--es.pass` you'll be prompted to enter it.
 
-Optionally you can set [the engine](https://app.swiftype.com/as/engines) you wish to use by using `--ap.engine` option.
-It defaults to `person` and if not existing when the injector starts, it will be created automatically.
+Optionally you can set [the engine](https://www.elastic.co/guide/en/app-search/current/engines.html) you wish to use by 
+using `--ap.engine` option. It defaults to `person` and if not existing when the injector starts, it will be created 
+automatically.
 
 ```sh
-java -jar injector-8.3-SNAPSHOT.jar --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person
+java -jar injector-8.3-SNAPSHOT.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
 ```
 
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
@@ -171,7 +172,7 @@ java -jar injector-8.3-SNAPSHOT.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
-    --appsearch --ap.host host-XYZ --app.key private-XYZ --ap.engine person \
+    --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person \
     --console --cs.pretty --cs.appsearch
 ```
 
