@@ -42,14 +42,10 @@ jobs:
     - name: Update the documentation with Maven
       run: mvn clean process-resources
 
-#    - name: Commit changes
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      run: git commit -a -m "Update documentation for PR ${{ github.event.pull_request.number }}"
+    - name: Commit changes
+      run: git commit -a -m "Update documentation for PR ${{ github.event.pull_request.number }}"
 
     - name: Push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: git push
 
     - name: Build with Maven
