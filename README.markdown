@@ -5,39 +5,39 @@
 This injector is used to demo
 [elasticsearch](https://www.elastic.co/products/elasticsearch) and [Kibana](https://www.elastic.co/products/kibana).
 
-| Injector       | elasticsearch | Release date |
-|:---------------|:--------------|:------------:|
-| 8.4-SNAPSHOT   | 8.4.1         |              |
-| 8.3            | 8.3.1         |  2022-07-06  |
-| 8.0            | 8.0.0         |  2022-02-16  |
-| 7.15           | 7.15.1        |  2021-10-28  |
-| 7.0            | 7.0.0         |  2019-04-11  |
-| 6.5            | 6.5.1         |  2018-12-03  |
-| 6.4.2          | 6.4.2         |  2018-10-03  |
-| 6.4            | 6.4.0         |  2018-09-06  |
-| 6.2            | 6.2.3         |  2018-04-09  |
-| 6.0            | 6.0.0-alpha1  |  2017-05-10  |
-| 5.3            | 5.3.2         |  2017-05-05  |
-| 5.0            | 5.0.0         |  2016-10-03  |
-| 5.0            | 5.0.0         |  2016-03-31  |
-| 5.0            | 5.0.0-alpha1  |  2016-03-30  |
-| 3.2            | 2.2.0         |  2016-02-05  |
-| 3.1            | 2.1.0         |  2015-11-27  |
-| 3.0            | 2.0.0         |  2015-11-12  |
-| 2.10           | 1.7.1         |  2015-09-07  |
-| 2.9            | 1.6.0         |  2015-06-15  |
-| 2.8            | 1.5.2         |  2015-06-01  |
-| 2.7            | 1.4.4         |  2015-02-24  |
-| 2.6            | 1.4.0         |  2014-11-19  |
-| 2.5            | 1.3.2         |  2014-09-02  |
-| 2.4            | 1.2.0         |  2014-05-26  |
-| 2.3            | 1.1.1         |  2014-05-06  |
-| 2.2            | 1.1.0         |  2014-04-01  |
-| 2.1            | 1.0.0         |  2014-03-21  |
-| 2.1.RC2        | 1.0.0.RC2     |  2014-02-04  |
-| 2.1.RC1        | 1.0.0.RC1     |  2014-01-23  |
-| 1.1            | 0.90.6        |  2013-11-05  |
-| 1.0            | 0.90.5        |  2013-10-01  |
+| Injector           | elasticsearch | Release date |
+|:-------------------|:--------------|:------------:|
+| 8.4 | 8.4.1         |              |
+| 8.3                | 8.3.1         |  2022-07-06  |
+| 8.0                | 8.0.0         |  2022-02-16  |
+| 7.15               | 7.15.1        |  2021-10-28  |
+| 7.0                | 7.0.0         |  2019-04-11  |
+| 6.5                | 6.5.1         |  2018-12-03  |
+| 6.4.2              | 6.4.2         |  2018-10-03  |
+| 6.4                | 6.4.0         |  2018-09-06  |
+| 6.2                | 6.2.3         |  2018-04-09  |
+| 6.0                | 6.0.0-alpha1  |  2017-05-10  |
+| 5.3                | 5.3.2         |  2017-05-05  |
+| 5.0                | 5.0.0         |  2016-10-03  |
+| 5.0                | 5.0.0         |  2016-03-31  |
+| 5.0                | 5.0.0-alpha1  |  2016-03-30  |
+| 3.2                | 2.2.0         |  2016-02-05  |
+| 3.1                | 2.1.0         |  2015-11-27  |
+| 3.0                | 2.0.0         |  2015-11-12  |
+| 2.10               | 1.7.1         |  2015-09-07  |
+| 2.9                | 1.6.0         |  2015-06-15  |
+| 2.8                | 1.5.2         |  2015-06-01  |
+| 2.7                | 1.4.4         |  2015-02-24  |
+| 2.6                | 1.4.0         |  2014-11-19  |
+| 2.5                | 1.3.2         |  2014-09-02  |
+| 2.4                | 1.2.0         |  2014-05-26  |
+| 2.3                | 1.1.1         |  2014-05-06  |
+| 2.2                | 1.1.0         |  2014-04-01  |
+| 2.1                | 1.0.0         |  2014-03-21  |
+| 2.1.RC2            | 1.0.0.RC2     |  2014-02-04  |
+| 2.1.RC1            | 1.0.0.RC1     |  2014-01-23  |
+| 1.1                | 0.90.6        |  2013-11-05  |
+| 1.0                | 0.90.5        |  2013-10-01  |
 
 `*` Broken version 
 
@@ -51,14 +51,14 @@ Usage
 =====
 
 If you are looking for a SNAPSHOT version, please look into 
-https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.4-SNAPSHOT/
+https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.4/
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/8.4-SNAPSHOT/injector-8.4-SNAPSHOT.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/8.4/injector-8.4.jar
 
 # Launch it (with all default settings)
-java -jar injector-8.4-SNAPSHOT.jar
+java -jar injector-8.4.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
@@ -77,7 +77,7 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --nb 1000 --bulk 100
+java -jar injector-8.4.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -91,14 +91,14 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-8.4.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
 (defaults to `elastic`) and `--es.pass` to define your credentials.
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-8.4.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
@@ -106,7 +106,7 @@ If you don't provide the `--es.pass` you'll be prompted to enter it.
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --elasticsearch --es.index person
+java -jar injector-8.4.jar --elasticsearch --es.index person
 ```
 
 If you want to use Kibana to display the information that have been generated, you can import the following
@@ -131,7 +131,7 @@ When sending documents to the [App Search service](https://www.elastic.co/guide/
 specify `--ap.host`, `--es.user` and `--es.pass`:
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
+java -jar injector-8.4.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
@@ -141,7 +141,7 @@ using `--ap.engine` option. It defaults to `person` and if not existing when the
 automatically.
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
+java -jar injector-8.4.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
 ```
 
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
@@ -153,14 +153,14 @@ Console
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --console --cs.pretty
+java -jar injector-8.4.jar --console --cs.pretty
 ```
 
 By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
 If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar --console --cs.appsearch
+java -jar injector-8.4.jar --console --cs.appsearch
 ```
 
 Using all services together
@@ -169,7 +169,7 @@ Using all services together
 You can start the injector like this (all options together):
 
 ```sh
-java -jar injector-8.4-SNAPSHOT.jar \
+java -jar injector-8.4.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
@@ -215,7 +215,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-8.4-SNAPSHOT.jar`. Or:
+Just get the final jar from `target/injector-8.4.jar`. Or:
 
 ```sh
 cd target
