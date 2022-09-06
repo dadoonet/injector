@@ -27,7 +27,6 @@ import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
-import co.elastic.clients.util.ApiTypeHelper;
 import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -93,10 +92,7 @@ public class ElasticsearchInjector extends Injector {
 
     @Override
     public void internalStart() throws IOException {
-        // We check the cluster is running
-        ApiTypeHelper.DANGEROUS_disableRequiredPropertiesCheck(true);
         InfoResponse info = client.info();
-        ApiTypeHelper.DANGEROUS_disableRequiredPropertiesCheck(false);
         logger.info("Injector connected to a node running elasticsearch {}", info.version().number());
 
         // Create or Update the template
