@@ -39,7 +39,7 @@
 
         <jackson.version>2.13.4</jackson.version>
         <log4j.version>2.19.0</log4j.version>
-        <elasticsearch.version>8.4.1</elasticsearch.version>
+        <elasticsearch.version>8.5.0</elasticsearch.version>
 
         <!-- For integration tests using Docker Compose or external cluster -->
         <contrib.dir>${project.basedir}/contrib</contrib.dir>
