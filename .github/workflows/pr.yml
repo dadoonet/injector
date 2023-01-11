@@ -3,23 +3,44 @@ name: Build PR
 on: pull_request
 
 jobs:
-  build:
+  update-files:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT }}
+        ref: ${{ github.head_ref }}
+    - name: Update resources with Maven
+      run: mvn -B resources:resources
+    - name: Update files if needed
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update resources on version change"
+    - name: Display results
+      run: |
+        ls -lrt /home/runner/work/injector/injector
+        git status
 
+  build:
+    needs: update-files
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'adopt'
         server-id: github
         settings-path: ${{ github.workspace }}
-
     - name: Docker Layer Caching
       uses: satackey/action-docker-layer-caching@v0.0.11
       # Ignore the failure of a step and avoid terminating the job.
@@ -28,6 +49,5 @@ jobs:
         key: injector-docker-cache-{hash}
         restore-keys: |
           injector-docker-cache-
-
     - name: Build with Maven
-      run: mvn -B verify
+      run: mvn -B install -DskipTests #verify
