@@ -20,10 +20,6 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Update resources on version change"
-    - name: Display results
-      run: |
-        ls -lrt /home/runner/work/injector/injector
-        git status
 
   build:
     needs: update-files
@@ -39,6 +35,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+        cache: 'maven'
         server-id: github
         settings-path: ${{ github.workspace }}
     - name: Docker Layer Caching
