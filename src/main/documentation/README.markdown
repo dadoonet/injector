@@ -57,7 +57,7 @@ https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsea
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/${injector.stable.version}/${injector.stable.name}.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/${injector.stable.version}/${injector.stable.name}.jar
 
 # Launch it (with all default settings)
 java -jar ${injector.stable.name}.jar
