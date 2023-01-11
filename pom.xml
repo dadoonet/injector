@@ -4,7 +4,7 @@
 
     <groupId>fr.pilato.elasticsearch.injector</groupId>
     <artifactId>injector</artifactId>
-    <version>8.5-SNAPSHOT</version>
+    <version>8.6-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
     <description>Injector for Demos</description>
     <url>https://github.com/dadoonet/injector</url>
@@ -40,6 +40,10 @@
         <jackson.version>2.14.1</jackson.version>
         <log4j.version>2.19.0</log4j.version>
         <elasticsearch.version>8.6.0</elasticsearch.version>
+
+        <!-- For the documentation -->
+        <injector.stable.version>8.6</injector.stable.version>
+        <injector.stable.name>injector-${injector.stable.version}</injector.stable.name>
 
         <!-- For integration tests using Docker Compose or external cluster -->
         <contrib.dir>${project.basedir}/contrib</contrib.dir>
