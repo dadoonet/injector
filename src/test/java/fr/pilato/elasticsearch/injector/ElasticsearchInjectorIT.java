@@ -47,6 +47,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class ElasticsearchInjectorIT {
     private ElasticsearchClient client;
@@ -83,7 +84,9 @@ public class ElasticsearchInjectorIT {
         Generate.main(new String[]{"--elasticsearch", "--nb", "100"});
         client.indices().refresh();
         SearchResponse<Person> response = client.search(sr -> sr.index("person"), Person.class);
-        assertThat(response.hits().total().value(), Matchers.is(100L));
+        assertThat(response.hits().total().value(), is(100L));
+        // Check that the index template exists
+        assertThat(client.indices().getIndexTemplate(itb -> itb.name("person")).indexTemplates(), not(emptyIterable()));
     }
 
     @After

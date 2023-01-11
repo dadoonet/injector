@@ -24,6 +24,7 @@ import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
+import co.elastic.clients.elasticsearch.indices.PutIndexTemplateResponse;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
@@ -43,6 +44,7 @@ import org.elasticsearch.client.RestClient;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -53,7 +55,6 @@ import java.util.List;
 public class ElasticsearchInjector extends Injector {
 
     private static final Logger logger = LogManager.getLogger(ElasticsearchInjector.class);
-    private final RestClient lowLevelClient;
     private final ElasticsearchClient client;
     private final ElasticsearchTransport transport;
     private final String index;
@@ -71,7 +72,7 @@ public class ElasticsearchInjector extends Injector {
 
             final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
             credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-            lowLevelClient = RestClient
+            RestClient lowLevelClient = RestClient
                     .builder(HttpHost.create(host))
                     .setHttpClientConfigCallback(hcb -> hcb
                             .setSSLContext(sslContext)
@@ -96,11 +97,14 @@ public class ElasticsearchInjector extends Injector {
         logger.info("Injector connected to a node running elasticsearch {}", info.version().number());
 
         // Create or Update the template
-        String schema = readFileInClasspath("/template.json");
-        Request request = new Request("PUT", "/_index_template/" + index);
-        request.setJsonEntity(schema);
-        lowLevelClient.performRequest(request);
-        logger.info("Template [{}] created or updated", index);
+        try (InputStream stream = Injector.class.getResource("/template.json").openStream()) {
+            PutIndexTemplateResponse response = client.indices().putIndexTemplate(itb -> itb.name(index).withJson(stream));
+            if (response.acknowledged()) {
+                logger.info("Template [{}] created or updated", index);
+            } else {
+                logger.fatal("Can not create template [{}]", index);
+            }
+        }
     }
 
     @Override
