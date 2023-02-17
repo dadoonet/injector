@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 8.7-SNAPSHOT | 8.6.1 |              |
+| 8.7-SNAPSHOT | 8.6.2 |              |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
 | 8.3                | 8.3.1                    |  2022-07-06  |
@@ -207,7 +207,7 @@ Developer Guide
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>8.6.1</elasticsearch.version>
+<elasticsearch.version>8.6.2</elasticsearch.version>
 ```
 
 Then compile the project:
