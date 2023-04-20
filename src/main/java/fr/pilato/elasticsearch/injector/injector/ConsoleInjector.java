@@ -48,7 +48,6 @@ public class ConsoleInjector extends Injector {
 
     @Override
     public void internalStart() {
-        System.out.println("******** STARTING GENERATING PERSONS ********");
     }
 
     @Override
@@ -67,6 +66,5 @@ public class ConsoleInjector extends Injector {
 
     @Override
     public void close() {
-        System.out.println("******** END OF PERSONS GENERATION ********");
     }
 }
