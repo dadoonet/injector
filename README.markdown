@@ -41,19 +41,17 @@ This injector is used to demo
 | 1.1                | 0.90.6                   |  2013-11-05  |
 | 1.0                | 0.90.5                   |  2013-10-01  |
 
-`*` Broken version 
+`*` Broken version
 
-Status
-======
+## Status
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/)
 [![Build and Deploy the main branch](https://github.com/dadoonet/injector/actions/workflows/main.yml/badge.svg)](https://github.com/dadoonet/injector/actions/workflows/main.yml)
 
-Usage
-=====
+## Usage
 
-If you are looking for a SNAPSHOT version, please look into 
-https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.7-SNAPSHOT/
+If you are looking for a SNAPSHOT version, please look into
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.7-SNAPSHOT/>
 
 ```sh
 # Download it from maven central
@@ -64,7 +62,7 @@ java -jar injector-8.6.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
-https://127.0.0.1:9200 with default password `changeme` for user named `elastic`.
+<https://127.0.0.1:9200> with default password `changeme` for user named `elastic`.
 
 Injector comes with the following implementations:
 
@@ -85,8 +83,7 @@ java -jar injector-8.6.jar --nb 1000 --bulk 100
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
 and will set `--elasticsearch` flag for you.
 
-Elasticsearch service
----------------------
+### Elasticsearch service
 
 When running an Elasticsearch instance, local or on [cloud.elastic.co](https://cloud.elastic.co/), you can define other options.
 
@@ -114,8 +111,8 @@ java -jar injector-8.6.jar --elasticsearch --es.index person
 If you want to use Kibana to display the information that have been generated, you can import the following
 files into Kibana using `Stack Management -> Kibana -> Saved Objects` menu and click on "Import":
 
-* Index pattern, Visualizations, Maps, Dashboard: https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-dashboard.ndjson
-* Canvas example: https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-canvas.ndjson
+* Index pattern, Visualizations, Maps, Dashboard: <https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-dashboard.ndjson>
+* Canvas example: <https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-canvas.ndjson>
 
 Example of the Persons dataset dashboard:
 
@@ -125,9 +122,7 @@ Example of the Canvas presentation:
 
 ![Canvas presentation](images/canvas.png "Canvas presentation")
 
-
-App Search service
-------------------
+### App Search service
 
 When sending documents to the [App Search service](https://www.elastic.co/guide/en/app-search/), you probably need to
 specify `--ap.host`, `--es.user` and `--es.pass`:
@@ -138,8 +133,8 @@ java -jar injector-8.6.jar --appsearch --ap.host http://localhost:3002/api/as/v1
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
 
-Optionally you can set [the engine](https://www.elastic.co/guide/en/app-search/current/engines.html) you wish to use by 
-using `--ap.engine` option. It defaults to `person` and if not existing when the injector starts, it will be created 
+Optionally you can set [the engine](https://www.elastic.co/guide/en/app-search/current/engines.html) you wish to use by
+using `--ap.engine` option. It defaults to `person` and if not existing when the injector starts, it will be created
 automatically.
 
 ```sh
@@ -149,8 +144,7 @@ java -jar injector-8.6.jar --appsearch --ap.host http://localhost:3002/api/as/v1
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
 of the App Search service, the injector will automatically adapt itself to use respectively `100000` and `100` (the limits).
 
-Console
--------
+### Console
 
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
@@ -165,8 +159,7 @@ If you want to generate documents according to the App Search model, you can pas
 java -jar injector-8.6.jar --console --cs.appsearch
 ```
 
-Using all services together
----------------------------
+### Using all services together
 
 You can start the injector like this (all options together):
 
@@ -182,15 +175,12 @@ java -jar injector-8.6.jar \
 When you build the project with maven, you'll see in `target/scripts` dir an example
 of scripts which you can adapt to your needs.
 
-Debug options
--------------
+### Debug options
 
 You can use `--silent`, `--debug` or `--trace` to change the log level when using the injector.
 That can give you more information when something is failing for example.
 
-
-Documentation
-=============
+## Documentation
 
 If you wish to edit the documentation, please edit it in `src/main/documentation`.
 
@@ -201,8 +191,7 @@ mvn clean process-resources
 git commit -a -m "Update documentation"
 ```
 
-Developer Guide
-===============
+## Developer Guide
 
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
@@ -225,8 +214,7 @@ cd target
 
 And launch all the examples from this dir.
 
-Release guide
-=============
+## Release guide
 
 Ideally, modify the `README.markdown` file to add a static line with the release.
 Also modify the `injector.stable.version` property in the `pom.xml` and commit the changes:
@@ -251,17 +239,16 @@ If you need to skip the tests, run:
 mvn release:perform -Prelease -Darguments="-DskipTests"
 ```
 
-If everything is ok in https://s01.oss.sonatype.org/#stagingRepositories, you can perform the release with:
+If everything is ok in <https://s01.oss.sonatype.org/#stagingRepositories>, you can perform the release with:
 
 ```sh
 mvn nexus-staging:release -DstagingRepositoryId=fr.pilato
 mvn nexus-staging:drop -DstagingRepositoryId=fr.pilato
 ```
 
-License
-=======
+## License
 
-```
+```txt
 This software is licensed under the Apache 2 license, quoted below.
 
 Copyright 2009-2023 Elastic <https://www.elastic.co>
