@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 8.7 | 8.7.0 |              |
+| 8.8-SNAPSHOT | 8.7.0 |              |
 | 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
@@ -52,7 +52,7 @@ This injector is used to demo
 ## Usage
 
 If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.7/>
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.8-SNAPSHOT/>
 
 ```sh
 # Download it from maven central
@@ -207,7 +207,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-8.7.jar`. Or:
+Just get the final jar from `target/injector-8.8-SNAPSHOT.jar`. Or:
 
 ```sh
 cd target
