@@ -51,9 +51,6 @@ This injector is used to demo
 
 ## Usage
 
-If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/${project.version}/>
-
 ```sh
 # Download it from maven central
 wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/${injector.stable.version}/${injector.stable.name}.jar
@@ -61,6 +58,9 @@ wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/${
 # Launch it (with all default settings)
 java -jar ${injector.stable.name}.jar
 ```
+
+If you are looking for a SNAPSHOT version, please look into
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/${project.version}/>
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
 <https://127.0.0.1:9200> with default password `changeme` for user named `elastic`.
