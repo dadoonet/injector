@@ -8,6 +8,7 @@ This injector is used to demo
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
 | 8.7-SNAPSHOT | 8.7.0 |              |
+| 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
 | 8.3                | 8.3.1                    |  2022-07-06  |
@@ -55,10 +56,10 @@ If you are looking for a SNAPSHOT version, please look into
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.6/injector-8.6.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.7/injector-8.7.jar
 
 # Launch it (with all default settings)
-java -jar injector-8.6.jar
+java -jar injector-8.7.jar
 ```
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
@@ -77,7 +78,7 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
-java -jar injector-8.6.jar --nb 1000 --bulk 100
+java -jar injector-8.7.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -90,14 +91,14 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
-java -jar injector-8.6.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-8.7.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
 (defaults to `elastic`) and `--es.pass` to define your credentials.
 
 ```sh
-java -jar injector-8.6.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-8.7.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
@@ -105,7 +106,7 @@ If you don't provide the `--es.pass` you'll be prompted to enter it.
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
-java -jar injector-8.6.jar --elasticsearch --es.index person
+java -jar injector-8.7.jar --elasticsearch --es.index person
 ```
 
 If you want to use Kibana to display the information that have been generated, you can import the following
@@ -128,7 +129,7 @@ When sending documents to the [App Search service](https://www.elastic.co/guide/
 specify `--ap.host`, `--es.user` and `--es.pass`:
 
 ```sh
-java -jar injector-8.6.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
+java -jar injector-8.7.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
@@ -138,7 +139,7 @@ using `--ap.engine` option. It defaults to `person` and if not existing when the
 automatically.
 
 ```sh
-java -jar injector-8.6.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
+java -jar injector-8.7.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
 ```
 
 The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
@@ -149,14 +150,14 @@ of the App Search service, the injector will automatically adapt itself to use r
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
-java -jar injector-8.6.jar --console --cs.pretty
+java -jar injector-8.7.jar --console --cs.pretty
 ```
 
 By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
 If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
 
 ```sh
-java -jar injector-8.6.jar --console --cs.appsearch
+java -jar injector-8.7.jar --console --cs.appsearch
 ```
 
 ### Using all services together
@@ -164,7 +165,7 @@ java -jar injector-8.6.jar --console --cs.appsearch
 You can start the injector like this (all options together):
 
 ```sh
-java -jar injector-8.6.jar \
+java -jar injector-8.7.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \

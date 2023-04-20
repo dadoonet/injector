@@ -8,6 +8,7 @@ This injector is used to demo
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
 | ${project.version} | ${elasticsearch.version} |              |
+| 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
 | 8.3                | 8.3.1                    |  2022-07-06  |

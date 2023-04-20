@@ -42,7 +42,7 @@
         <elasticsearch.version>8.7.0</elasticsearch.version>
 
         <!-- For the documentation -->
-        <injector.stable.version>8.6</injector.stable.version>
+        <injector.stable.version>8.7</injector.stable.version>
         <injector.stable.name>injector-${injector.stable.version}</injector.stable.name>
 
         <!-- For integration tests using Docker Compose or external cluster -->
