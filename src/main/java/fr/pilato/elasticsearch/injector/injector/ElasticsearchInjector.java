@@ -20,10 +20,11 @@
 package fr.pilato.elasticsearch.injector.injector;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester;
+import co.elastic.clients.elasticsearch._helpers.bulk.BulkListener;
+import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
-import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
-import co.elastic.clients.elasticsearch.core.bulk.IndexOperation;
 import co.elastic.clients.elasticsearch.indices.PutIndexTemplateResponse;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
@@ -39,7 +40,6 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RestClient;
 
 import javax.net.ssl.SSLContext;
@@ -48,7 +48,6 @@ import java.io.InputStream;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,13 +57,11 @@ public class ElasticsearchInjector extends Injector {
     private final ElasticsearchClient client;
     private final ElasticsearchTransport transport;
     private final String index;
-    private final int bulkSize;
-    private List<BulkOperation> bulkOperations;
+    private final BulkIngester<Void> ingester;
 
     public ElasticsearchInjector(String index, int bulkSize, String host, String username, String password) {
         logger.info("Using Elasticsearch backend running at {} with bulk size of {} documents in index {}", host, bulkSize, index);
         this.index = index;
-        this.bulkSize = bulkSize;
 
         try {
             SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(null, (x509Certificates, s) -> true);
@@ -84,11 +81,31 @@ public class ElasticsearchInjector extends Injector {
             // Create the new client (using the low level client)
             transport = new RestClientTransport(lowLevelClient, new JacksonJsonpMapper());
             client = new ElasticsearchClient(transport);
+
+            ingester = BulkIngester.of(b -> b
+                    .client(client)
+                    .listener(new BulkListener<Void>() {
+                        @Override
+                        public void beforeBulk(long executionId, BulkRequest request, List<Void> voids) {
+                            logger.debug("going to execute bulk of {} requests", request.operations().size());
+                        }
+
+                        @Override
+                        public void afterBulk(long executionId, BulkRequest request, List<Void> voids, BulkResponse response) {
+                            logger.debug("bulk executed {} errors", response.errors() ? "with" : "without");
+                        }
+
+                        @Override
+                        public void afterBulk(long executionId, BulkRequest request, List<Void> voids, Throwable failure) {
+                            logger.warn("error while executing bulk", failure);
+                        }
+                    })
+                    .maxOperations(bulkSize)
+            );
+
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
             throw new RuntimeException(e);
         }
-
-        bulkOperations = new ArrayList<>(bulkSize);
     }
 
     @Override
@@ -114,39 +131,16 @@ public class ElasticsearchInjector extends Injector {
 
     @Override
     public void inject(int finalI, Person person) {
-        bulkOperations.add(IndexOperation.of(c -> c.document(person))._toBulkOperation());
-        if (bulkOperations.size() >= bulkSize) {
-            doExecute();
-            bulkOperations = new ArrayList<>(bulkSize);
-        }
-    }
-
-    private void doExecute() {
-        try {
-            logger.debug("Going to execute new bulk composed of {} actions", bulkOperations.size());
-            BulkResponse response = client.bulk(r -> r.index(index).operations(bulkOperations));
-            logger.debug("Executed bulk composed of {} actions", bulkOperations.size());
-            if (response.errors()) {
-                logger.warn("There was failures while executing bulk");
-                if (logger.isDebugEnabled()) {
-                    response.items()
-                            .stream()
-                            .filter(i -> i.error() != null)
-                            .forEach(item -> logger.debug("Error for {}/{} for {} operation: {}",
-                                    item.index(), item.id(), item.operationType(), item.error().reason()));
-                }
-            }
-
-        } catch (Throwable t) {
-            logger.warn("Error executing bulk", t);
-        }
+        ingester.add(bo -> bo.index(
+                io -> io.index(index).document(person)
+        ));
     }
 
     @Override
     public void close() {
         logger.debug("Closing the injector");
-        if (!bulkOperations.isEmpty()) {
-            doExecute();
+        if (ingester != null) {
+            ingester.close();
         }
 
         if (client != null) {
