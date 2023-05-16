@@ -39,7 +39,7 @@
 
         <jackson.version>2.15.0</jackson.version>
         <log4j.version>2.20.0</log4j.version>
-        <elasticsearch.version>8.7.0</elasticsearch.version>
+        <elasticsearch.version>8.7.1</elasticsearch.version>
 
         <!-- For the documentation -->
         <injector.stable.version>8.7</injector.stable.version>
