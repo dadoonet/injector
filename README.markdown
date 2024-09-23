@@ -188,7 +188,7 @@ And launch all the examples from this dir.
 
 ## Release guide
 
-Ideally, modify the `README.markdown` file to add a static line with the release.
+Ideally, modify the `src/main/documentation/README.markdown` file to add a static line with the release.
 Also modify the `injector.stable.version` property in the `pom.xml` and commit the changes:
 
 ```shell
