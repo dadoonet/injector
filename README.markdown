@@ -8,6 +8,7 @@ This injector is used to demo
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
 | 8.15-SNAPSHOT | 8.15.1 |              |
+| 8.15               | 8.15.1                   |  2024-09-23  |
 | 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
@@ -55,10 +56,10 @@ You will need Java 17 to run the injector.
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.7/injector-8.7.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.15/injector-8.15.jar
 
 # Launch it (with all default settings)
-java -jar injector-8.7.jar
+java -jar injector-8.15.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
@@ -79,7 +80,7 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
-java -jar injector-8.7.jar --nb 1000 --bulk 100
+java -jar injector-8.15.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -92,14 +93,14 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
-java -jar injector-8.7.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-8.15.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
 (defaults to `elastic`) and `--es.pass` to define your credentials.
 
 ```sh
-java -jar injector-8.7.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-8.15.jar --elasticsearch --es.user elastic --es.pass changeme
 ```
 
 If you don't provide the `--es.pass` you'll be prompted to enter it.
@@ -107,7 +108,7 @@ If you don't provide the `--es.pass` you'll be prompted to enter it.
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
-java -jar injector-8.7.jar --elasticsearch --es.index person
+java -jar injector-8.15.jar --elasticsearch --es.index person
 ```
 
 If you want to use Kibana to display the information that have been generated, you can import the following
@@ -129,7 +130,7 @@ Example of the Canvas presentation:
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
-java -jar injector-8.7.jar --console --cs.pretty
+java -jar injector-8.15.jar --console --cs.pretty
 ```
 
 ### Using all services together
@@ -137,7 +138,7 @@ java -jar injector-8.7.jar --console --cs.pretty
 You can start the injector like this (all options together):
 
 ```sh
-java -jar injector-8.7.jar \
+java -jar injector-8.15.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
