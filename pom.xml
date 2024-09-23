@@ -38,7 +38,7 @@
         <java.compiler.version>17</java.compiler.version>
 
         <jackson.version>2.15.1</jackson.version>
-        <log4j.version>2.20.0</log4j.version>
+        <log4j.version>2.24.0</log4j.version>
         <elasticsearch.version>8.15.1</elasticsearch.version>
 
         <!-- For the documentation -->
