@@ -130,18 +130,6 @@
             <version>1.82</version>
         </dependency>
 
-        <!-- Needed for Swiftype Client -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.14</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
-
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -330,15 +318,12 @@
                         <STACK_VERSION>${integ.elasticsearch.version}</STACK_VERSION>
                         <ELASTIC_PASSWORD>${tests.cluster.pass}</ELASTIC_PASSWORD>
                         <ES_PORT>${integ.elasticsearch.port}</ES_PORT>
-                        <ENTERPRISE_SEARCH_PORT>${integ.workplace.port}</ENTERPRISE_SEARCH_PORT>
-                        <LICENSE>trial</LICENSE>
                     </envVars>
                     <composeFiles>
                         <composeFile>docker-compose.yml</composeFile>
                     </composeFiles>
                     <services>
                         <service>elasticsearch</service>
-                        <service>enterprisesearch</service>
                     </services>
                     <ignorePullFailures>true</ignorePullFailures>
                     <removeOrphans>true</removeOrphans>
@@ -379,10 +364,6 @@
                         <check>
                             <url>https://localhost:9200/</url>
                             <statusCode>401</statusCode>
-                        </check>
-                        <check>
-                            <url>http://localhost:3002/</url>
-                            <statusCode>302</statusCode>
                         </check>
                     </checks>
                 </configuration>

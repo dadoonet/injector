@@ -28,7 +28,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import fr.pilato.elasticsearch.injector.helper.PersonGenerator;
-import fr.pilato.elasticsearch.injector.injector.AppSearchInjector;
 import fr.pilato.elasticsearch.injector.injector.ConsoleInjector;
 import fr.pilato.elasticsearch.injector.injector.Injector;
 import fr.pilato.elasticsearch.injector.serializer.MetaParser;
@@ -78,17 +77,6 @@ public class Generate {
         @Parameter(names = "--es.pass", description = "Elasticsearch user password.", password = true)
         private String esPassword = "changeme";
 
-        // App Search specific options
-
-        @Parameter(names = "--appsearch", description = "Use it when you want to inject in a app search service")
-        private boolean appsearch = false;
-
-        @Parameter(names = "--ap.engine", description = "App Search Engine name.")
-        private String apEngine = "person";
-
-        @Parameter(names = "--ap.host", description = "App Search url like http://localhost:3002/api/as/v1/.")
-        private String apHost = "http://localhost:3002/api/as/v1/";
-
         // Console specific options
 
         @Parameter(names = "--console", description = "Use it when you want to just generate dataset to the console")
@@ -96,9 +84,6 @@ public class Generate {
 
         @Parameter(names = "--cs.pretty", description = "Use pretty mode if set")
         private boolean csPretty = false;
-
-        @Parameter(names = "--cs.appsearch", description = "Generate data using the app search model instead of the normal one")
-        private boolean csAppSearch = false;
     }
 
     public static void main(String[] args) {
@@ -122,7 +107,7 @@ public class Generate {
             return;
         }
 
-        if (!commands.elasticsearch && !commands.appsearch && !commands.console) {
+        if (!commands.elasticsearch && !commands.console) {
             // Let's suppose we want to use elasticsearch by default
             commands.elasticsearch = true;
         }
@@ -132,13 +117,8 @@ public class Generate {
             injectors.add(new ElasticsearchInjector(commands.esIndex, commands.bulkSize, commands.esHost,
                     commands.esUsername, commands.esPassword));
         }
-        if (commands.appsearch) {
-            injectors.add(new AppSearchInjector(commands.apEngine, commands.apHost,
-                    commands.esUsername, commands.esPassword,
-                    commands.bulkSize));
-        }
         if (commands.console) {
-            injectors.add(new ConsoleInjector(commands.csPretty, commands.csAppSearch));
+            injectors.add(new ConsoleInjector(commands.csPretty));
         }
         try {
             injectors.forEach(Injector::start);

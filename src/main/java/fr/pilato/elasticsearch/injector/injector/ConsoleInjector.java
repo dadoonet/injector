@@ -21,7 +21,6 @@ package fr.pilato.elasticsearch.injector.injector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.pilato.elasticsearch.injector.bean.AppSearchPerson;
 import fr.pilato.elasticsearch.injector.bean.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,12 +37,10 @@ public class ConsoleInjector extends Injector {
     private static final Logger logger = LogManager.getLogger(ConsoleInjector.class);
 
     private final ObjectMapper mapper;
-    private final boolean forAppSearch;
 
-    public ConsoleInjector(boolean pretty, boolean forAppSearch) {
+    public ConsoleInjector(boolean pretty) {
         logger.info("Using Console to generate the dataset with pretty set to {}", pretty);
         mapper = pretty ? MetaParser.prettyMapper : MetaParser.mapper;
-        this.forAppSearch = forAppSearch;
     }
 
     @Override
@@ -58,7 +55,7 @@ public class ConsoleInjector extends Injector {
     @Override
     public void inject(int finalI, Person person) {
         try {
-            System.out.println(mapper.writeValueAsString(forAppSearch ? new AppSearchPerson(person) : person));
+            System.out.println(mapper.writeValueAsString(person));
         } catch (JsonProcessingException e) {
             logger.warn("Can not serialize to JSON", e);
         }

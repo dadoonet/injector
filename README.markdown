@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 8.8-SNAPSHOT | 8.8.0 |              |
+| 8.8-SNAPSHOT | 8.15.1 |              |
 | 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
@@ -68,7 +68,6 @@ With no option, it will inject `1000000` documents with a bulk size of `10000` i
 Injector comes with the following implementations:
 
 * Elasticsearch (`--elasticsearch` flag), where you want to index generated data to an elasticsearch cluster running locally or on [cloud](https://cloud.elastic.co/).
-* App Search (`--appsearch` flag), where you want to index generated data to the [App Search service](https://app.swiftype.com/as).
 * Console (`--console` flag), where you want to just print on the console generated data.
 
 For both, you can configure `--nb` option to define the number of documents you'd like to generate
@@ -123,41 +122,12 @@ Example of the Canvas presentation:
 
 ![Canvas presentation](images/canvas.png "Canvas presentation")
 
-### App Search service
-
-When sending documents to the [App Search service](https://www.elastic.co/guide/en/app-search/), you probably need to
-specify `--ap.host`, `--es.user` and `--es.pass`:
-
-```sh
-java -jar injector-8.7.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme
-```
-
-If you don't provide the `--es.pass` you'll be prompted to enter it.
-
-Optionally you can set [the engine](https://www.elastic.co/guide/en/app-search/current/engines.html) you wish to use by
-using `--ap.engine` option. It defaults to `person` and if not existing when the injector starts, it will be created
-automatically.
-
-```sh
-java -jar injector-8.7.jar --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person
-```
-
-The `--nb` and `--bulk` options are also used by this injector. Note that if you set them above the limits
-of the App Search service, the injector will automatically adapt itself to use respectively `100000` and `100` (the limits).
-
 ### Console
 
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
 java -jar injector-8.7.jar --console --cs.pretty
-```
-
-By default, JSON documents are generated using their default model (the one used by Elasticsearch implementation).
-If you want to generate documents according to the App Search model, you can pass the `--cs.appsearch` option:
-
-```sh
-java -jar injector-8.7.jar --console --cs.appsearch
 ```
 
 ### Using all services together
@@ -169,8 +139,7 @@ java -jar injector-8.7.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
-    --appsearch --ap.host http://localhost:3002/api/as/v1/ --es.user elastic --es.pass changeme --ap.engine person \
-    --console --cs.pretty --cs.appsearch
+    --console --cs.pretty
 ```
 
 When you build the project with maven, you'll see in `target/scripts` dir an example
@@ -197,7 +166,7 @@ git commit -a -m "Update documentation"
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>8.8.0</elasticsearch.version>
+<elasticsearch.version>8.15.1</elasticsearch.version>
 ```
 
 Then compile the project:
@@ -252,7 +221,7 @@ mvn nexus-staging:drop -DstagingRepositoryId=fr.pilato
 ```txt
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2009-2023 Elastic <https://www.elastic.co>
+Copyright 2009-2024 Elastic <https://www.elastic.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
