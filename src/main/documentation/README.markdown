@@ -51,6 +51,8 @@ This injector is used to demo
 
 ## Usage
 
+You will need Java ${java.compiler.version} to run the injector.
+
 ```sh
 # Download it from maven central
 wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/${injector.stable.version}/${injector.stable.name}.jar

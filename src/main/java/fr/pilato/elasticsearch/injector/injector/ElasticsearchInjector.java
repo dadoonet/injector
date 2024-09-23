@@ -84,7 +84,7 @@ public class ElasticsearchInjector extends Injector {
 
             ingester = BulkIngester.of(b -> b
                     .client(client)
-                    .listener(new BulkListener<Void>() {
+                    .listener(new BulkListener<>() {
                         @Override
                         public void beforeBulk(long executionId, BulkRequest request, List<Void> voids) {
                             logger.debug("going to execute bulk of {} requests", request.operations().size());

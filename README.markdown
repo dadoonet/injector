@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 8.8-SNAPSHOT | 8.15.1 |              |
+| 8.15-SNAPSHOT | 8.15.1 |              |
 | 8.7                | 8.7.0                    |  2023-04-20  |
 | 8.6                | 8.6.0                    |  2023-01-12  |
 | 8.4                | 8.4.1                    |  2022-09-06  |
@@ -51,6 +51,8 @@ This injector is used to demo
 
 ## Usage
 
+You will need Java 17 to run the injector.
+
 ```sh
 # Download it from maven central
 wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.7/injector-8.7.jar
@@ -60,7 +62,7 @@ java -jar injector-8.7.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.8-SNAPSHOT/>
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.15-SNAPSHOT/>
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
 <https://127.0.0.1:9200> with default password `changeme` for user named `elastic`.
@@ -176,7 +178,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-8.8-SNAPSHOT.jar`. Or:
+Just get the final jar from `target/injector-8.15-SNAPSHOT.jar`. Or:
 
 ```sh
 cd target
