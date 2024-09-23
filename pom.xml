@@ -37,9 +37,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.compiler.version>17</java.compiler.version>
 
+        <elasticsearch.version>8.15.1</elasticsearch.version>
         <jackson.version>2.17.2</jackson.version>
         <log4j.version>2.24.0</log4j.version>
-        <elasticsearch.version>8.15.1</elasticsearch.version>
+        <junit.version>5.11.0</junit.version>
 
         <!-- For the documentation -->
         <injector.stable.version>8.7</injector.stable.version>
@@ -50,7 +51,6 @@
         <integ.elasticsearch.image>docker.elastic.co/elasticsearch/elasticsearch</integ.elasticsearch.image>
         <integ.elasticsearch.version>${elasticsearch.version}</integ.elasticsearch.version>
         <integ.elasticsearch.port>9200</integ.elasticsearch.port>
-        <integ.workplace.port>3002</integ.workplace.port>
         <tests.cluster.url />
         <tests.cluster.user>elastic</tests.cluster.user>
         <tests.cluster.pass>changeme</tests.cluster.pass>
@@ -138,9 +138,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

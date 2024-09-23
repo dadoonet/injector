@@ -20,12 +20,12 @@
 package fr.pilato.elasticsearch.injector;
 
 import fr.pilato.elasticsearch.injector.runner.Generate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ConsoleInjectorIT {
 
     @Test
-    public void testInjector() {
+    void testInjector() {
         Generate.main(new String[]{"--console", "--nb", "100"});
     }
 }

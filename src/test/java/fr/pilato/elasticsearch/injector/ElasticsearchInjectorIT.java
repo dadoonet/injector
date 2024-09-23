@@ -35,9 +35,9 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.elasticsearch.client.RestClient;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -52,8 +52,8 @@ public class ElasticsearchInjectorIT {
     private ElasticsearchClient client;
     private ElasticsearchTransport transport;
 
-    @Before
-    public void initClient() {
+    @BeforeEach
+    void initClient() {
         try {
             SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(null, (x509Certificates, s) -> true);
             final SSLContext sslContext = sslBuilder.build();
@@ -78,7 +78,7 @@ public class ElasticsearchInjectorIT {
     }
 
     @Test
-    public void testInjector() throws IOException {
+    void testInjector() throws IOException {
         client.indices().delete(dir -> dir.index("person").ignoreUnavailable(true));
         Generate.main(new String[]{"--elasticsearch", "--nb", "100"});
         client.indices().refresh();
@@ -88,8 +88,8 @@ public class ElasticsearchInjectorIT {
         assertThat(client.indices().getIndexTemplate(itb -> itb.name("person")).indexTemplates(), not(emptyIterable()));
     }
 
-    @After
-    public void stopClient() {
+    @AfterEach
+    void stopClient() {
         if (client != null) {
             try {
                 transport.close();
