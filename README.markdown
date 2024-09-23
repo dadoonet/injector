@@ -113,7 +113,7 @@ java -jar injector-8.7.jar --elasticsearch --es.index person
 If you want to use Kibana to display the information that have been generated, you can import the following
 files into Kibana using `Stack Management -> Kibana -> Saved Objects` menu and click on "Import":
 
-* Index pattern, Visualizations, Maps, Dashboard: <https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-dashboard.ndjson>
+* Data view, Dashboard, Maps, Visualisations: <https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-dashboard.ndjson>
 * Canvas example: <https://github.com/dadoonet/injector/blob/main/src/main/resources/kibana-canvas.ndjson>
 
 Example of the Persons dataset dashboard:
