@@ -30,17 +30,21 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import fr.pilato.elasticsearch.injector.bean.Person;
+
+import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -59,7 +63,7 @@ public class ElasticsearchInjector extends Injector {
     private final String index;
     private final BulkIngester<Void> ingester;
 
-    public ElasticsearchInjector(String index, int bulkSize, String host, String username, String password) {
+    public ElasticsearchInjector(String index, int bulkSize, String host, String username, String password, String apikey) {
         logger.info("Using Elasticsearch backend running at {} with bulk size of {} documents in index {}", host, bulkSize, index);
         this.index = index;
 
@@ -67,19 +71,28 @@ public class ElasticsearchInjector extends Injector {
             SSLContextBuilder sslBuilder = SSLContexts.custom().loadTrustMaterial(null, (x509Certificates, s) -> true);
             final SSLContext sslContext = sslBuilder.build();
 
-            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-            credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-            RestClient lowLevelClient = RestClient
-                    .builder(HttpHost.create(host))
-                    .setHttpClientConfigCallback(hcb -> hcb
-                            .setSSLContext(sslContext)
-                            .setSSLHostnameVerifier(new NoopHostnameVerifier())
-                            .setDefaultCredentialsProvider(credentialsProvider)
-                    )
-                    .build();
+            RestClientBuilder lowLevelClientBuilder = RestClient.builder(HttpHost.create(host));
+            if (apikey != null) {
+                lowLevelClientBuilder.setHttpClientConfigCallback(hcb -> hcb
+                        .setSSLContext(sslContext)
+                        .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                );
+                lowLevelClientBuilder.setDefaultHeaders(new Header[] {
+                    new BasicHeader("Authorization", "ApiKey " + apikey)
+                });
+            } else {
+                logger.warn("Using basic authentication is deprecated. Please use API Key instead (--es.apikey).");
+                final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+                credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+                lowLevelClientBuilder.setHttpClientConfigCallback(hcb -> hcb
+                        .setSSLContext(sslContext)
+                        .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                        .setDefaultCredentialsProvider(credentialsProvider)
+                );
+            }
 
             // Create the new client (using the low level client)
-            transport = new RestClientTransport(lowLevelClient, new JacksonJsonpMapper());
+            transport = new RestClientTransport(lowLevelClientBuilder.build(), new JacksonJsonpMapper());
             client = new ElasticsearchClient(transport);
 
             ingester = BulkIngester.of(b -> b

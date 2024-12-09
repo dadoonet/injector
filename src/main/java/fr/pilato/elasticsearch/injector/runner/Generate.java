@@ -71,10 +71,15 @@ public class Generate {
         @Parameter(names = "--es.index", description = "Elasticsearch index name.")
         private String esIndex = "person";
 
-        @Parameter(names = "--es.user", description = "Elasticsearch user name.")
+        @Parameter(names = "--es.apikey", description = "Elasticsearch API Key.")
+        private String esApikey = null;
+
+        @Parameter(names = "--es.user", description = "Elasticsearch user name (Deprecated).")
+        @Deprecated
         private String esUsername = "elastic";
 
-        @Parameter(names = "--es.pass", description = "Elasticsearch user password.", password = true)
+        @Parameter(names = "--es.pass", description = "Elasticsearch user password (Deprecated).", password = true)
+        @Deprecated
         private String esPassword = "changeme";
 
         // Console specific options
@@ -115,7 +120,7 @@ public class Generate {
         List<Injector> injectors = new ArrayList<>();
         if (commands.elasticsearch) {
             injectors.add(new ElasticsearchInjector(commands.esIndex, commands.bulkSize, commands.esHost,
-                    commands.esUsername, commands.esPassword));
+                    commands.esUsername, commands.esPassword, commands.esApikey));
         }
         if (commands.console) {
             injectors.add(new ConsoleInjector(commands.csPretty));
