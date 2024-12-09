@@ -44,7 +44,7 @@
         <junit.version>5.11.3</junit.version>
 
         <!-- For the documentation -->
-        <injector.stable.version>8.15</injector.stable.version>
+        <injector.stable.version>8.16</injector.stable.version>
         <injector.stable.name>injector-${injector.stable.version}</injector.stable.name>
 
         <!-- For integration tests using Docker Compose or external cluster -->
