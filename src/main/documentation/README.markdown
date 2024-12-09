@@ -140,7 +140,7 @@ You can start the injector like this (all options together):
 java -jar ${injector.stable.name}.jar \
     --nb 1000 --bulk 100 \
     --debug \
-    --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.user elastic --es.pass changeme --es.index person \
+    --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.apikey API_KEY --es.index person \
     --console --cs.pretty
 ```
 
