@@ -22,7 +22,7 @@ package fr.pilato.elasticsearch.injector.serializer;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -43,7 +43,7 @@ public class MetaParser {
         prettyMapper.registerModule(new JavaTimeModule());
         prettyMapper.registerModule(injector);
         prettyMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        prettyMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        prettyMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
         prettyMapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
         prettyMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         prettyMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
@@ -52,7 +52,7 @@ public class MetaParser {
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(injector);
         mapper.configure(SerializationFeature.INDENT_OUTPUT, false);
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE);
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CASE);
         mapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
