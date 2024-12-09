@@ -27,14 +27,18 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import fr.pilato.elasticsearch.injector.bean.Person;
 import fr.pilato.elasticsearch.injector.runner.Generate;
+
+import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.message.BasicHeader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.junit.jupiter.api.*;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -52,6 +56,7 @@ public class ElasticsearchInjectorIT {
 
     private static final Logger logger = LogManager.getLogger();
     private ElasticsearchClient client = null;
+    private String apikey;
     private static final String PASSWORD = "changeme";
     private static ElasticsearchContainer container;
     private static byte[] certAsBytes;
@@ -76,10 +81,16 @@ public class ElasticsearchInjectorIT {
                 "/usr/share/elasticsearch/config/certs/http_ca.crt",
                 InputStream::readAllBytes);
     }
-
+    
     @BeforeEach
     void createClientAndCleanData() throws IOException {
         client = getClient("https://" + container.getHttpHostAddress(), certAsBytes);
+
+        apikey = client.security().createApiKey(cak -> cak.name("injector")).encoded();
+
+        // Recreate the client with the api key
+        client = getClient("https://" + container.getHttpHostAddress(), certAsBytes);
+
         removeData(INDEX_NAME);
         removeData(INDEX_NAME_DEFAULT);
     }
@@ -96,7 +107,9 @@ public class ElasticsearchInjectorIT {
         testWithArgs(INDEX_NAME_DEFAULT, new String[]{
                 "--elasticsearch",
                 "--nb", "100",
-                "--es.host", "https://" + container.getHttpHostAddress()});
+                "--es.host", "https://" + container.getHttpHostAddress(),
+                "--es.apikey", apikey,
+            });
     }
 
     @Test
@@ -105,7 +118,9 @@ public class ElasticsearchInjectorIT {
                 "--elasticsearch",
                 "--nb", "100",
                 "--es.host", "https://" + container.getHttpHostAddress(),
-                "--es.index", INDEX_NAME});
+                "--es.apikey", apikey,
+                "--es.index", INDEX_NAME
+            });
     }
 
     private void testWithArgs(String indexName, String[] args) throws IOException {
@@ -120,20 +135,30 @@ public class ElasticsearchInjectorIT {
     private ElasticsearchClient getClient(String elasticsearchServiceAddress, byte[] certificate) throws IOException {
         logger.debug("Trying to connect to {} {}.", elasticsearchServiceAddress,
                 certificate == null ? "with no ssl checks": "using the provided SSL certificate");
-        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY,
-                new UsernamePasswordCredentials("elastic", PASSWORD));
 
         // Create the low-level client
-        RestClient restClient = RestClient.builder(HttpHost.create(elasticsearchServiceAddress))
-                .setHttpClientConfigCallback(hcb -> hcb
-                        .setDefaultCredentialsProvider(credentialsProvider)
-                        .setSSLContext(certificate != null ?
-                                createContextFromCaCert(certificate) : createTrustAllCertsContext())
-                ).build();
+        RestClientBuilder restClientBuilder = RestClient.builder(HttpHost.create(elasticsearchServiceAddress));
+        if (apikey == null) {
+            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+            credentialsProvider.setCredentials(AuthScope.ANY,
+                    new UsernamePasswordCredentials("elastic", PASSWORD));
+            restClientBuilder.setHttpClientConfigCallback(hcb -> hcb
+                .setDefaultCredentialsProvider(credentialsProvider)
+                .setSSLContext(certificate != null ?
+                        createContextFromCaCert(certificate) : createTrustAllCertsContext())
+                );
+        } else {
+            restClientBuilder.setHttpClientConfigCallback(hcb -> hcb
+                .setSSLContext(certificate != null ?
+                        createContextFromCaCert(certificate) : createTrustAllCertsContext())
+            )                
+            .setDefaultHeaders(new Header[]{
+                new BasicHeader("Authorization", "ApiKey " + apikey)
+            });
+        }
 
         // Create the API client
-        ElasticsearchClient client = new ElasticsearchClient(new RestClientTransport(restClient, new JacksonJsonpMapper()));
+        ElasticsearchClient client = new ElasticsearchClient(new RestClientTransport(restClientBuilder.build(), new JacksonJsonpMapper()));
         InfoResponse info = client.info();
         logger.debug("Client connected to a cluster running version {} at {}.", info.version().number(), elasticsearchServiceAddress);
         return client;

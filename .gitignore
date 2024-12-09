@@ -14,6 +14,9 @@
 *.iws
 .idea/
 
+# Vscode
+.vscode/
+
 # Maven build directory
 target/
 

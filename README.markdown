@@ -96,20 +96,19 @@ To define the host to send the data to, set `--es.host` option (defaults to `htt
 java -jar injector-8.15.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
-If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.user`
-(defaults to `elastic`) and `--es.pass` to define your credentials.
+If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.apikey` to set the [API Key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html) to use.
 
 ```sh
-java -jar injector-8.15.jar --elasticsearch --es.user elastic --es.pass changeme
+java -jar injector-8.15.jar --elasticsearch --es.apikey API_KEY
 ```
-
-If you don't provide the `--es.pass` you'll be prompted to enter it.
 
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
 java -jar injector-8.15.jar --elasticsearch --es.index person
 ```
+
+**Note:** `--es.user` (defaults to `elastic`) and `--es.pass` are deprecated and should not be used anymore.
 
 If you want to use Kibana to display the information that have been generated, you can import the following
 files into Kibana using `Stack Management -> Kibana -> Saved Objects` menu and click on "Import":
