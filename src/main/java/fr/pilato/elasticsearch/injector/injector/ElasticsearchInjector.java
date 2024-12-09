@@ -73,6 +73,7 @@ public class ElasticsearchInjector extends Injector {
 
             RestClientBuilder lowLevelClientBuilder = RestClient.builder(HttpHost.create(host));
             if (apikey != null) {
+                logger.debug("Using API Key authentication");
                 lowLevelClientBuilder.setHttpClientConfigCallback(hcb -> hcb
                         .setSSLContext(sslContext)
                         .setSSLHostnameVerifier(new NoopHostnameVerifier())
