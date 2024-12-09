@@ -4,7 +4,7 @@
 
     <groupId>fr.pilato.elasticsearch.injector</groupId>
     <artifactId>injector</artifactId>
-    <version>8.16</version>
+    <version>8.17-SNAPSHOT</version>
     <name>Demos: Person Injector</name>
     <description>Injector for Demos</description>
     <url>https://github.com/dadoonet/injector</url>
@@ -61,7 +61,7 @@
         <connection>scm:git:git@github.com:dadoonet/injector.git</connection>
         <url>scm:git:git@github.com:dadoonet/injector.git</url>
         <developerConnection>scm:git:git@github.com:dadoonet/injector.git</developerConnection>
-      <tag>injector-8.16</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <distributionManagement>
