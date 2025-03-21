@@ -212,19 +212,15 @@ If you need to skip the tests, run:
 mvn release:perform -Prelease -Darguments="-DskipTests"
 ```
 
-If everything is ok in <https://s01.oss.sonatype.org/#stagingRepositories>, you can perform the release with:
-
-```sh
-mvn nexus-staging:release -DstagingRepositoryId=fr.pilato
-mvn nexus-staging:drop -DstagingRepositoryId=fr.pilato
-```
+If everything is ok in <https://central.sonatype.com/artifact/fr.pilato.elasticsearch.injector/injector>, 
+you can confirm the release from the sonatype UI.
 
 ## License
 
 ```txt
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2009-2024 Elastic <https://www.elastic.co>
+Copyright 2009-2025 Elastic <https://www.elastic.co>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
