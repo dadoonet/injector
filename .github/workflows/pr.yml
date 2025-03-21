@@ -17,7 +17,7 @@ jobs:
     - name: Update resources with Maven
       run: mvn -B resources:resources
     - name: Update files if needed
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Update resources on version change"
 
