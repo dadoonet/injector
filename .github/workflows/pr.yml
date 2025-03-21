@@ -3,26 +3,7 @@ name: Build PR
 on: pull_request
 
 jobs:
-  update-files:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.PAT || github.token }}
-        ref: ${{ github.head_ref }}
-    - name: Update resources with Maven
-      run: mvn -B resources:resources
-    - name: Update files if needed
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "Update resources on version change"
-
   build:
-    needs: update-files
     runs-on: ubuntu-latest
     permissions:
       contents: read
