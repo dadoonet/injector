@@ -51,7 +51,9 @@ This injector is used to demo
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/)
 [![Build and Deploy the main branch](https://github.com/dadoonet/injector/actions/workflows/main.yml/badge.svg)](https://github.com/dadoonet/injector/actions/workflows/main.yml)
 
-## Usage
+## Installation
+
+### Local installation
 
 You will need Java 17 to run the injector.
 
@@ -65,6 +67,24 @@ java -jar injector-8.16.jar
 
 If you are looking for a SNAPSHOT version, please look into
 <https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/8.17-SNAPSHOT/>
+
+### Docker installation
+
+```sh
+# Pull the latest build
+docker pull dadoonet/persons-injector
+
+# Or a specific version
+docker pull dadoonet/persons-injector:8.16
+
+# Launch it (with all default settings)
+docker run dadoonet/persons-injector
+```
+
+If you are looking for a SNAPSHOT version, please look into 
+<https://hub.docker.com/repository/docker/dadoonet/persons-injector/>
+
+## Usage
 
 With no option, it will inject `1000000` documents with a bulk size of `10000` in a local cluster running at
 <https://127.0.0.1:9200> with default password `changeme` for user named `elastic`.
@@ -81,6 +101,9 @@ Also `--bulk` option can be set to define how many documents should be sent at o
 For example:
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector --nb 1000 --bulk 100
+# Local installation
 java -jar injector-8.16.jar --nb 1000 --bulk 100
 ```
 
@@ -94,18 +117,27 @@ When running an Elasticsearch instance, local or on [cloud.elastic.co](https://c
 To define the host to send the data to, set `--es.host` option (defaults to `https://127.0.0.1:9200`):
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+# Local installation
 java -jar injector-8.16.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.apikey` to set the [API Key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html) to use.
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector --elasticsearch --es.apikey API_KEY
+# Local installation
 java -jar injector-8.16.jar --elasticsearch --es.apikey API_KEY
 ```
 
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector --elasticsearch --es.index person
+# Local installation
 java -jar injector-8.16.jar --elasticsearch --es.index person
 ```
 
@@ -130,6 +162,9 @@ Example of the Canvas presentation:
 When printing documents to the console, you can choose to prettify the documents first by using `cs.pretty` option:
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector --console --cs.pretty
+# Local installation
 java -jar injector-8.16.jar --console --cs.pretty
 ```
 
@@ -138,6 +173,12 @@ java -jar injector-8.16.jar --console --cs.pretty
 You can start the injector like this (all options together):
 
 ```sh
+# Docker installation
+docker run dadoonet/persons-injector \
+    --nb 1000 --bulk 100 \
+    --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.apikey API_KEY --es.index person \
+    --console --cs.pretty
+# Local installation
 java -jar injector-8.16.jar \
     --nb 1000 --bulk 100 \
     --debug \

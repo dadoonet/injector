@@ -48,7 +48,6 @@
         <injector.stable.name>injector-${injector.stable.version}</injector.stable.name>
 
         <!-- For integration tests using Docker Compose or external cluster -->
-        <contrib.dir>${project.basedir}/contrib</contrib.dir>
         <integ.elasticsearch.image>docker.elastic.co/elasticsearch/elasticsearch</integ.elasticsearch.image>
         <integ.elasticsearch.version>${elasticsearch.version}</integ.elasticsearch.version>
         <integ.elasticsearch.port>9200</integ.elasticsearch.port>
@@ -168,6 +167,7 @@
     </dependencies>
 
     <build>
+        <defaultGoal>package</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/documentation</directory>
@@ -289,6 +289,52 @@
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                             </transformers>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Generate and push the docker images -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.45.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>run-java-sh</artifactId>
+                        <version>1.2.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>dadoonet/persons-injector</name>
+                            <build>
+                                <contextDir>${project.basedir}</contextDir>
+                                <dockerFile>Dockerfile</dockerFile>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <!-- Generate the docker images during the "install" phase -->
+                    <execution>
+                        <id>docker-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                    <!-- Push the docker images during the "deploy" phase -->
+                    <execution>
+                        <id>docker-push</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
