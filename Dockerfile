@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 RUN mkdir -p /opt
 ADD ${project.build.directory}/docker-extra/run-java/run-java.sh /opt
