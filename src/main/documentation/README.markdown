@@ -123,11 +123,18 @@ docker run dadoonet/persons-injector --elasticsearch --es.host https://cloud_id.
 java -jar ${injector.stable.name}.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
+When using the default local cluster using the Docker image, you need to tell the injector to use the host network with
+`--network host` option so that it can connect to the local Elasticsearch instance running on `localhost:9200`.
+
+```sh
+docker run --network host dadoonet/persons-injector --elasticsearch
+```
+
 If your cluster is secured, which is what will happen most likely on cloud.elastic.co, use `--es.apikey` to set the [API Key](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html) to use.
 
 ```sh
 # Docker installation
-docker run dadoonet/persons-injector --elasticsearch --es.apikey API_KEY
+docker run --network host dadoonet/persons-injector --elasticsearch --es.apikey API_KEY
 # Local installation
 java -jar ${injector.stable.name}.jar --elasticsearch --es.apikey API_KEY
 ```
@@ -136,7 +143,7 @@ If you'd like to index your data in another index than `person` (default one), u
 
 ```sh
 # Docker installation
-docker run dadoonet/persons-injector --elasticsearch --es.index person
+docker run --network host dadoonet/persons-injector --elasticsearch --es.index person
 # Local installation
 java -jar ${injector.stable.name}.jar --elasticsearch --es.index person
 ```
