@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 8.17-SNAPSHOT | 8.17.4 |              |
+| 8.17-SNAPSHOT | 9.0.2 |              |
 | 8.16               | 8.16.1                   |  2024-12-09  |
 | 8.15               | 8.15.1                   |  2024-09-23  |
 | 8.7                | 8.7.0                    |  2023-04-20  |
@@ -217,7 +217,7 @@ git commit -a -m "Update documentation"
 If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>8.17.4</elasticsearch.version>
+<elasticsearch.version>9.0.2</elasticsearch.version>
 ```
 
 Then compile the project:
