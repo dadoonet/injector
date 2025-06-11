@@ -23,22 +23,11 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
 import fr.pilato.elasticsearch.injector.bean.Person;
 import fr.pilato.elasticsearch.injector.runner.Generate;
 
-import org.apache.http.Header;
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.message.BasicHeader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
 import org.junit.jupiter.api.*;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -47,8 +36,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static fr.pilato.elasticsearch.injector.SSLUtils.createContextFromCaCert;
-import static fr.pilato.elasticsearch.injector.SSLUtils.createTrustAllCertsContext;
+import static fr.pilato.elasticsearch.injector.helper.SSLUtils.createContextFromCaCert;
+import static fr.pilato.elasticsearch.injector.helper.SSLUtils.createTrustAllCertsContext;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -136,29 +125,25 @@ public class ElasticsearchInjectorIT {
         logger.debug("Trying to connect to {} {}.", elasticsearchServiceAddress,
                 certificate == null ? "with no ssl checks": "using the provided SSL certificate");
 
-        // Create the low-level client
-        RestClientBuilder restClientBuilder = RestClient.builder(HttpHost.create(elasticsearchServiceAddress));
-        if (apikey == null) {
-            final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-            credentialsProvider.setCredentials(AuthScope.ANY,
-                    new UsernamePasswordCredentials("elastic", PASSWORD));
-            restClientBuilder.setHttpClientConfigCallback(hcb -> hcb
-                .setDefaultCredentialsProvider(credentialsProvider)
-                .setSSLContext(certificate != null ?
-                        createContextFromCaCert(certificate) : createTrustAllCertsContext())
-                );
+        // Create the client
+        if (apikey != null) {
+            logger.debug("Using API Key authentication");
+            client = ElasticsearchClient.of(b -> b
+                    .host(elasticsearchServiceAddress)
+                    .sslContext(certificate != null ?
+                            createContextFromCaCert(certificate) : createTrustAllCertsContext())
+                    .apiKey(apikey)
+            );
         } else {
-            restClientBuilder.setHttpClientConfigCallback(hcb -> hcb
-                .setSSLContext(certificate != null ?
-                        createContextFromCaCert(certificate) : createTrustAllCertsContext())
-            )                
-            .setDefaultHeaders(new Header[]{
-                new BasicHeader("Authorization", "ApiKey " + apikey)
-            });
+            logger.warn("Using basic authentication is deprecated. Please use API Key instead (--es.apikey).");
+            client = ElasticsearchClient.of(b -> b
+                    .host(elasticsearchServiceAddress)
+                    .sslContext(certificate != null ?
+                            createContextFromCaCert(certificate) : createTrustAllCertsContext())
+                    .usernameAndPassword("elastic", PASSWORD)
+            );
         }
 
-        // Create the API client
-        ElasticsearchClient client = new ElasticsearchClient(new RestClientTransport(restClientBuilder.build(), new JacksonJsonpMapper()));
         InfoResponse info = client.info();
         logger.debug("Client connected to a cluster running version {} at {}.", info.version().number(), elasticsearchServiceAddress);
         return client;

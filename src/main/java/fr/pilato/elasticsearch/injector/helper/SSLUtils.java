@@ -17,10 +17,10 @@
  * under the License.
  */
 
-package fr.pilato.elasticsearch.injector;
+package fr.pilato.elasticsearch.injector.helper;
 
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.SSLContexts;
+import org.apache.hc.core5.ssl.SSLContextBuilder;
+import org.apache.hc.core5.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
