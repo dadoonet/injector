@@ -1,48 +1,43 @@
 name: Build PR
 
-on: pull_request
+on:
+  pull_request:
+  push:
 
 jobs:
-  # We update files if needed
-  update-files:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT || github.token }}
           ref: ${{ github.head_ref }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: 'maven'
+          server-id: github
+          settings-path: ${{ github.workspace }}
       - name: Update resources with Maven
         run: mvn -B process-resources
       - name: Update files if needed
+        id: auto-commit-action #mandatory for the output to show up in ${{ steps }}
         uses: stefanzweifel/git-auto-commit-action@v6
-
-  build:
-    needs: update-files
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-        cache: 'maven'
-        server-id: github
-        settings-path: ${{ github.workspace }}
-    - name: Docker Layer Caching
-      uses: satackey/action-docker-layer-caching@v0.0.11
-      # Ignore the failure of a step and avoid terminating the job.
-      continue-on-error: true
-      with:
-        key: injector-docker-cache-{hash}
-        restore-keys: |
-          injector-docker-cache-
-    - name: Build with Maven
-      run: mvn -B verify
+      - name: Docker Layer Caching
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+        with:
+          key: injector-docker-cache-{hash}
+          restore-keys: |
+            injector-docker-cache-
+      - name: Build with Maven
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: mvn -B verify
