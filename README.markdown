@@ -214,10 +214,16 @@ git commit -a -m "Update documentation"
 
 ## Developer Guide
 
-If you want to build it yourself or update to a new elasticsearch version, modify `pom.xml` file:
+If you want to update to a new elasticsearch server version, modify `pom.xml` file:
 
 ```xml
 <elasticsearch.version>9.1.2</elasticsearch.version>
+```
+
+If you want to manually update to a new elasticsearch client version, modify `pom.xml` file:
+
+```xml
+<elasticsearch-client.version>9.1.3</elasticsearch-client.version>
 ```
 
 Then compile the project:
