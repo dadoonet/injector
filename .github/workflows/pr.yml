@@ -3,6 +3,8 @@ name: Build the project
 on:
   pull_request:
   push:
+    branches:
+      - '**'
     branches-ignore:
       - main
 
