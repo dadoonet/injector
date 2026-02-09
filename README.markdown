@@ -55,7 +55,7 @@ This injector is used to demo
 
 ### Local installation
 
-You will need Java 17 to run the injector.
+You will need Java 21 to run the injector.
 
 ```sh
 # Download it from maven central
