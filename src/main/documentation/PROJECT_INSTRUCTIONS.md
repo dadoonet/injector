@@ -23,7 +23,7 @@ The project also ships Kibana saved objects (dashboard, Canvas, visualizations) 
 
 - **Java 21** (enforced by the build).
 - **Maven** to build and run tests.
-- **Docker** (optional) to build and run the container image.
+- **Docker** (optional) to build and run the container image. GraalVM is not required on the host; the native executable is built inside the Docker build.
 
 ---
 
@@ -47,7 +47,7 @@ mvn clean package -DskipTests
 - **Flattened JAR:** `target/injector-<version>.jar` (e.g. `target/injector-${project.version}.jar`) — runnable with `java -jar injector-<version>.jar [options]`.
 - **Docker image:** Built by the `docker-maven-plugin` during the `package` phase (see below).
 
-The Docker build uses the `Dockerfile` in the project root. It relies on files produced by Maven in `target/` (the shaded JAR and, via the fabric8 `run-java-sh` dependency, the `run-java.sh` script under `target/docker-extra/run-java/`). Do not run `docker build` by hand without having run `mvn package` first; the image is intended to be built through Maven.
+The Docker build uses the `Dockerfile` in the project root. It is a multi-stage build: the first stage builds the JAR with Maven from `pom.xml` and `src/`, the second stage uses GraalVM to produce a native executable from that JAR, and the final stage copies only the native binary into a minimal runtime image. The image is built by the `docker-maven-plugin` when you run `mvn package` (or `mvn install`); you can also run `docker build .` manually from the project root.
 
 ---
 
@@ -59,8 +59,8 @@ The build generates a single Docker image:
 |-----------------------------|--------------------------------------------------------|
 | `dadoonet/persons-injector` | `<project.version>` (e.g. `${project.version}`) and `latest` |
 
-**Base image:** `eclipse-temurin:<java.compiler.version>-jre-alpine` (Java 21 JRE, Alpine).  
-**Entrypoint:** `/opt/run-java.sh`, which runs the injector JAR with any arguments you pass to `docker run`.
+**Base image:** `debian:bookworm-slim` (minimal glibc image; no JVM).  
+**Entrypoint:** `/opt/injector` — a GraalVM native executable that accepts the same options as the JAR (e.g. `--console`, `--nb`, `--elasticsearch`).
 
 **Examples:**
 
@@ -108,7 +108,7 @@ You should see log lines and 10 generated person documents. Add `--cs.pretty` fo
 
 ### 3. Minimal check that the Docker image works (recommended: `--console`)
 
-To verify that the **Docker image** is functional without needing a running Elasticsearch, run the container with **`--console`** and a small document count. This checks that the image starts, the JRE runs the JAR, and the injector prints data to stdout.
+To verify that the **Docker image** is functional without needing a running Elasticsearch, run the container with **`--console`** and a small document count. This checks that the image starts (native binary, no JVM) and the injector prints data to stdout.
 
 ```bash
 # Build the image (if not already built)
