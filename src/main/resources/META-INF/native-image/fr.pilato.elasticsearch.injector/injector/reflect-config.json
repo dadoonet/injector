@@ -1,0 +1,8 @@
+[
+  {"name": "fr.pilato.elasticsearch.injector.bean.Person", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true},
+  {"name": "fr.pilato.elasticsearch.injector.bean.Address", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true},
+  {"name": "fr.pilato.elasticsearch.injector.bean.Marketing", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true},
+  {"name": "fr.pilato.elasticsearch.injector.bean.GeoPoint", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true},
+  {"name": "fr.pilato.elasticsearch.injector.runner.Generate$GenerateCommand", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true},
+  {"name": "fr.pilato.elasticsearch.injector.serializer.CustomDateSerializer", "allDeclaredConstructors": true, "allDeclaredMethods": true, "allDeclaredFields": true}
+]

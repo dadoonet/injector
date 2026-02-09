@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "includes": [
+      {"pattern": "template\\.json"},
+      {"pattern": "prenoms\\.csv"},
+      {"pattern": "log4j2\\.xml"}
+    ],
+    "excludes": []
+  }
+}
