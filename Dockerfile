@@ -1,4 +1,5 @@
-FROM eclipse-temurin:25-jdk
+# JRE instead of JDK to reduce image size; version aligned with java.compiler.version in pom.xml
+FROM eclipse-temurin:${java.compiler.version}-jre
 
 RUN mkdir -p /opt
 ADD ${project.build.directory}/docker-extra/run-java/run-java.sh /opt
