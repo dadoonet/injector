@@ -91,6 +91,13 @@ public class ElasticsearchInjectorIT {
         }
     }
 
+    @AfterAll
+    static void closeTestContainers() {
+        if (container != null) {
+            container.close();
+        }
+    }
+
     @Test
     void testInjector() throws IOException {
         testWithArgs(INDEX_NAME_DEFAULT, new String[]{
