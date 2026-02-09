@@ -8,6 +8,7 @@ This injector is used to demo
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
 | 9.3-SNAPSHOT | 9.3.0 |              |
+| 9.3                | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
 | 8.15               | 8.15.1                   |  2024-09-23  |
 | 8.7                | 8.7.0                    |  2023-04-20  |
@@ -59,10 +60,10 @@ You will need Java 21 to run the injector.
 
 ```sh
 # Download it from maven central
-wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/8.16/injector-8.16.jar
+wget https://repo1.maven.org/maven2/fr/pilato/elasticsearch/injector/injector/9.3/injector-9.3.jar
 
 # Launch it (with all default settings)
-java -jar injector-8.16.jar
+java -jar injector-9.3.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
@@ -75,7 +76,7 @@ If you are looking for a SNAPSHOT version, please look into
 docker pull dadoonet/persons-injector
 
 # Or a specific version
-docker pull dadoonet/persons-injector:8.16
+docker pull dadoonet/persons-injector:9.3
 
 # Launch it (with all default settings)
 docker run dadoonet/persons-injector
@@ -104,7 +105,7 @@ For example:
 # Docker installation
 docker run dadoonet/persons-injector --nb 1000 --bulk 100
 # Local installation
-java -jar injector-8.16.jar --nb 1000 --bulk 100
+java -jar injector-9.3.jar --nb 1000 --bulk 100
 ```
 
 If no implementation is set, the injector will assume by default that you want to index your data in Elasticsearch
@@ -120,7 +121,7 @@ To define the host to send the data to, set `--es.host` option (defaults to `htt
 # Docker installation
 docker run dadoonet/persons-injector --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 # Local installation
-java -jar injector-8.16.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
+java -jar injector-9.3.jar --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243
 ```
 
 When using the default local cluster using the Docker image, you need to tell the injector to use the host network with
@@ -136,7 +137,7 @@ If your cluster is secured, which is what will happen most likely on cloud.elast
 # Docker installation
 docker run --network host dadoonet/persons-injector --elasticsearch --es.apikey API_KEY
 # Local installation
-java -jar injector-8.16.jar --elasticsearch --es.apikey API_KEY
+java -jar injector-9.3.jar --elasticsearch --es.apikey API_KEY
 ```
 
 If you'd like to index your data in another index than `person` (default one), use `--es.index`:
@@ -145,7 +146,7 @@ If you'd like to index your data in another index than `person` (default one), u
 # Docker installation
 docker run --network host dadoonet/persons-injector --elasticsearch --es.index person
 # Local installation
-java -jar injector-8.16.jar --elasticsearch --es.index person
+java -jar injector-9.3.jar --elasticsearch --es.index person
 ```
 
 **Note:** `--es.user` (defaults to `elastic`) and `--es.pass` are deprecated and should not be used anymore.
@@ -172,7 +173,7 @@ When printing documents to the console, you can choose to prettify the documents
 # Docker installation
 docker run dadoonet/persons-injector --console --cs.pretty
 # Local installation
-java -jar injector-8.16.jar --console --cs.pretty
+java -jar injector-9.3.jar --console --cs.pretty
 ```
 
 ### Using all services together
@@ -186,7 +187,7 @@ docker run dadoonet/persons-injector \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.apikey API_KEY --es.index person \
     --console --cs.pretty
 # Local installation
-java -jar injector-8.16.jar \
+java -jar injector-9.3.jar \
     --nb 1000 --bulk 100 \
     --debug \
     --elasticsearch --es.host https://cloud_id.europe-west1.gcp.cloud.es.io:9243 --es.apikey API_KEY --es.index person \
