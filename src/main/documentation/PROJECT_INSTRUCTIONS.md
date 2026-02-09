@@ -47,7 +47,7 @@ mvn clean package -DskipTests
 - **Flattened JAR:** `target/injector-<version>.jar` (e.g. `target/injector-${project.version}.jar`) — runnable with `java -jar injector-<version>.jar [options]`.
 - **Docker image:** Built by the `docker-maven-plugin` during the `package` phase (see below).
 
-The Docker build uses the `Dockerfile` in the project root. It is a multi-stage build: the first stage builds the JAR with Maven from `pom.xml` and `src/`, the second stage uses GraalVM to produce a native executable from that JAR, and the final stage copies only the native binary into a minimal runtime image. The image is built by the `docker-maven-plugin` when you run `mvn package` (or `mvn install`); you can also run `docker build .` manually from the project root.
+The Docker build uses the `Dockerfile` in the project root. It is a multi-stage build: the first stage builds the JAR with Maven from `pom.xml` and `src/`, the second stage uses GraalVM to produce a native executable from that JAR, and the final stage copies only the native binary into a minimal Alpine runtime image. The image is built by the `docker-maven-plugin` when you run `mvn package` (or `mvn install`); you can also run `docker build .` manually from the project root.
 
 ---
 
@@ -59,7 +59,7 @@ The build generates a single Docker image:
 |-----------------------------|--------------------------------------------------------|
 | `dadoonet/persons-injector` | `<project.version>` (e.g. `${project.version}`) and `latest` |
 
-**Base image:** `debian:bookworm-slim` (minimal glibc image; no JVM).  
+**Base image:** `alpine:3.19` (minimal image; no JVM). The GraalVM native executable is glibc-linked and runs on Alpine via `gcompat`. The binary is built with `-H:+StripDebugInfo` to reduce size.  
 **Entrypoint:** `/opt/injector` — a GraalVM native executable that accepts the same options as the JAR (e.g. `--console`, `--nb`, `--elasticsearch`).
 
 **Examples:**
