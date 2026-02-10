@@ -19,8 +19,6 @@
 
 package fr.pilato.elasticsearch.injector.runner;
 
-import com.beust.jcommander.JCommander;
-import com.beust.jcommander.Parameter;
 import fr.pilato.elasticsearch.injector.bean.Person;
 import fr.pilato.elasticsearch.injector.injector.ElasticsearchInjector;
 import org.apache.logging.log4j.Level;
@@ -31,6 +29,9 @@ import fr.pilato.elasticsearch.injector.helper.PersonGenerator;
 import fr.pilato.elasticsearch.injector.injector.ConsoleInjector;
 import fr.pilato.elasticsearch.injector.injector.Injector;
 import fr.pilato.elasticsearch.injector.serializer.MetaParser;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,66 +39,80 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Main entry point to generate person documents and inject them to console or Elasticsearch.
+ * <p>
+ * Command-line parsing is implemented with <a href="https://picocli.info/">Picocli</a>.
+ * </p>
  */
 public class Generate {
     private static final Logger logger = LogManager.getLogger(Generate.class);
 
-    /** Command-line options for the generate command. */
+    /**
+     * Command-line options for the generate command (Picocli).
+     */
+    @Command(name = "injector",
+            description = "Generate person documents and inject to console or Elasticsearch.",
+            usageHelpAutoWidth = true)
     public static class GenerateCommand {
 
-        /** Default constructor for JCommander. */
+        /** Default constructor for Picocli. */
         public GenerateCommand() {
         }
 
         // Common options
 
-        @Parameter(names = "--debug", description = "Debug mode")
-        private boolean debug = false;
+        @Option(names = "--debug", description = "Debug mode")
+        private boolean debug;
 
-        @Parameter(names = "--trace", description = "Trace mode", hidden = true)
-        private boolean trace = false;
+        @Option(names = "--trace", description = "Trace mode")
+        private boolean trace;
 
-        @Parameter(names = "--silent", description = "Silent mode", hidden = true)
-        private boolean silent = false;
+        @Option(names = "--silent", description = "Silent mode")
+        private boolean silent;
 
-        @Parameter(names = "--help", description = "display current help", help = true, hidden = true)
-        boolean help;
+        @Option(names = {"-h", "--help"}, description = "display current help", usageHelp = true, hidden = true)
+        private boolean help;
 
-        @Parameter(names = "--nb", description = "Number of documents to inject.")
-        private Integer nb = 1000000;
+        @Option(names = {"--nb"}, description = "Number of documents to inject (default: ${DEFAULT-VALUE}).",
+                defaultValue = "1000000")
+        private Integer nb;
 
-        @Parameter(names = "--bulk", description = "Size of each bulk.")
-        private Integer bulkSize = 10000;
+        @Option(names = {"--bulk"}, description = "Size of each bulk (default: ${DEFAULT-VALUE}).",
+                defaultValue = "10000")
+        private Integer bulkSize;
 
         // Elasticsearch specific options
 
-        @Parameter(names = "--elasticsearch", description = "Use it when you want to inject in a local cluster")
-        private boolean elasticsearch = false;
+        @Option(names = {"--elasticsearch"}, description = "Use it when you want to inject in Elasticsearch")
+        private boolean elasticsearch;
 
-        @Parameter(names = "--es.host", description = "Elasticsearch host.")
-        private String esHost = "https://127.0.0.1:9200";
+        @Option(names = {"--es.host"}, description = "Elasticsearch host (default: ${DEFAULT-VALUE}).",
+                defaultValue = "https://127.0.0.1:9200")
+        private String esHost;
 
-        @Parameter(names = "--es.index", description = "Elasticsearch index name.")
-        private String esIndex = "person";
+        @Option(names = {"--es.index"}, description = "Elasticsearch index name (default: ${DEFAULT-VALUE}).",
+                defaultValue = "person")
+        private String esIndex;
 
-        @Parameter(names = "--es.apikey", description = "Elasticsearch API Key.")
-        private String esApikey = null;
+        @Option(names = {"--es.apikey"}, description = "Elasticsearch API Key.", arity = "0..1", interactive = true)
+        private String esApikey;
 
-        @Parameter(names = "--es.user", description = "Elasticsearch user name (Deprecated).")
+        @Option(names = {"--es.user"}, description = "Elasticsearch user name (default: ${DEFAULT-VALUE}). Deprecated",
+                defaultValue = "elastic")
         @Deprecated
-        private String esUsername = "elastic";
+        private String esUsername;
 
-        @Parameter(names = "--es.pass", description = "Elasticsearch user password (Deprecated).", password = true)
+        @Option(names = {"--es.pass"}, description = "Elasticsearch user password (default: ${DEFAULT-VALUE}). Deprecated",
+                defaultValue = "changeme", arity = "0..1", interactive = true)
         @Deprecated
-        private String esPassword = "changeme";
+        private String esPassword;
 
         // Console specific options
 
-        @Parameter(names = "--console", description = "Use it when you want to just generate dataset to the console")
-        private boolean console = false;
+        @Option(names = {"--console"}, description = "Use it when you want to just generate dataset to the console")
+        private boolean console;
 
-        @Parameter(names = "--cs.pretty", description = "Use pretty mode if set")
-        private boolean csPretty = false;
+        @Option(names = {"--cs.pretty"}, description = "Use pretty mode if set")
+        private boolean csPretty;
     }
 
     /** Private constructor for main class. */
@@ -106,27 +121,36 @@ public class Generate {
 
     /**
      * Main entry point.
+     *
      * @param args command-line arguments (see {@link GenerateCommand})
      */
     public static void main(String[] args) {
         GenerateCommand commands = new GenerateCommand();
-        JCommander jCommander = new JCommander(commands);
-        jCommander.parse(args);
+        CommandLine cmd = new CommandLine(commands);
+        try {
+            cmd.parseArgs(args);
+        } catch (CommandLine.ParameterException e) {
+            try {
+                cmd.getParameterExceptionHandler().handleParseException(e, args);
+            } catch (Exception ex) {
+                logger.error("Invalid arguments: {}", e.getMessage());
+            }
+            return;
+        }
+
+        if (cmd.isUsageHelpRequested()) {
+            cmd.usage(System.out);
+            return;
+        }
 
         // Change debug level if needed
         if (commands.debug || commands.trace || commands.silent) {
-
             if (commands.silent) {
                 // We change the full rootLogger level
                 Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.OFF);
             } else {
                 Configurator.setAllLevels("fr.pilato.elasticsearch.injector", commands.debug ? Level.DEBUG : Level.TRACE);
             }
-        }
-
-        if (commands.help) {
-            jCommander.usage();
-            return;
         }
 
         if (!commands.elasticsearch && !commands.console) {
@@ -163,7 +187,7 @@ public class Generate {
                 logger.info("Done injecting [{}] persons", commands.nb);
             } else {
                 logger.warn("No injector has been started correctly. Read help.");
-                jCommander.usage();
+                cmd.usage(System.out);
             }
 
         } catch (Throwable t) {

@@ -25,6 +25,8 @@ The project also ships Kibana saved objects (dashboard, Canvas, visualizations) 
 - **Maven** to build and run tests.
 - **Docker** (optional) to build and run the container image. GraalVM is not required on the host; the native executable is built inside the Docker build.
 
+The command-line interface is implemented with [Picocli](https://picocli.info/).
+
 ---
 
 ## How to build

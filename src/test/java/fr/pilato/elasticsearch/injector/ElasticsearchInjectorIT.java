@@ -41,7 +41,7 @@ import static fr.pilato.elasticsearch.injector.helper.SSLUtils.createTrustAllCer
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ElasticsearchInjectorIT {
+class ElasticsearchInjectorIT {
 
     private static final Logger logger = LogManager.getLogger();
     private ElasticsearchClient client = null;

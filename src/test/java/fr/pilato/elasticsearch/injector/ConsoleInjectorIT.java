@@ -22,7 +22,7 @@ package fr.pilato.elasticsearch.injector;
 import fr.pilato.elasticsearch.injector.runner.Generate;
 import org.junit.jupiter.api.Test;
 
-public class ConsoleInjectorIT {
+class ConsoleInjectorIT {
 
     @Test
     void testInjector() {

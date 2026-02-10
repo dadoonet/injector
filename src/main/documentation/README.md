@@ -215,6 +215,8 @@ git commit -a -m "Update documentation"
 
 ## Developer Guide
 
+The command-line interface is implemented with [Picocli](https://picocli.info/).
+
 If you want to update to a new elasticsearch server version, modify `pom.xml` file:
 
 ```xml
