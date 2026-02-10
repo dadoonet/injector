@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn -B package -DskipTests -Ddocker.skip=true
 
 # Stage 2: build native binary with GraalVM (glibc-linked)
-FROM ghcr.io/graalvm/native-image-community:21 AS native-builder
+FROM ghcr.io/graalvm/native-image-community:25 AS native-builder
 WORKDIR /build
 COPY --from=jar-builder /build/target/injector-*.jar ./app.jar
 RUN native-image -jar app.jar -o injector --no-fallback \
