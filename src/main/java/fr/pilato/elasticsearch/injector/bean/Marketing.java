@@ -25,6 +25,11 @@ package fr.pilato.elasticsearch.injector.bean;
  */
 public class Marketing {
     private Integer cars;
+
+    /** Default constructor for marketing data. */
+    public Marketing() {
+    }
+
     private Integer shoes;
     private Integer toys;
     private Integer fashion;
@@ -34,74 +39,92 @@ public class Marketing {
     private Integer hifi;
     private Integer food;
 
+    /** @return number of clicks on cars segment */
     public Integer getCars() {
         return cars;
     }
 
+    /** @param cars number of clicks on cars segment */
     public void setCars(Integer cars) {
         this.cars = cars;
     }
 
+    /** @return number of clicks on shoes segment */
     public Integer getShoes() {
         return shoes;
     }
 
+    /** @param shoes number of clicks on shoes segment */
     public void setShoes(Integer shoes) {
         this.shoes = shoes;
     }
 
+    /** @return number of clicks on toys segment */
     public Integer getToys() {
         return toys;
     }
 
+    /** @param toys number of clicks on toys segment */
     public void setToys(Integer toys) {
         this.toys = toys;
     }
 
+    /** @return number of clicks on fashion segment */
     public Integer getFashion() {
         return fashion;
     }
 
+    /** @param fashion number of clicks on fashion segment */
     public void setFashion(Integer fashion) {
         this.fashion = fashion;
     }
 
+    /** @return number of clicks on music segment */
     public Integer getMusic() {
         return music;
     }
 
+    /** @param music number of clicks on music segment */
     public void setMusic(Integer music) {
         this.music = music;
     }
 
+    /** @return number of clicks on garden segment */
     public Integer getGarden() {
         return garden;
     }
 
+    /** @param garden number of clicks on garden segment */
     public void setGarden(Integer garden) {
         this.garden = garden;
     }
 
+    /** @return number of clicks on electronic segment */
     public Integer getElectronic() {
         return electronic;
     }
 
+    /** @param electronic number of clicks on electronic segment */
     public void setElectronic(Integer electronic) {
         this.electronic = electronic;
     }
 
+    /** @return number of clicks on hifi segment */
     public Integer getHifi() {
         return hifi;
     }
 
+    /** @param hifi number of clicks on hifi segment */
     public void setHifi(Integer hifi) {
         this.hifi = hifi;
     }
 
+    /** @return number of clicks on food segment */
     public Integer getFood() {
         return food;
     }
 
+    /** @param food number of clicks on food segment */
     public void setFood(Integer food) {
         this.food = food;
     }

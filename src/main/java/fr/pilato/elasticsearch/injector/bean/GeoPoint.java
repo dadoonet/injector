@@ -19,31 +19,55 @@
 
 package fr.pilato.elasticsearch.injector.bean;
 
+/**
+ * Represents a geographic point with latitude and longitude.
+ */
 public class GeoPoint {
     private double lon;
     private double lat;
 
+    /** Default constructor for geo point. */
     public GeoPoint() {
-
     }
 
+    /**
+     * Creates a geo point with the given coordinates.
+     * @param lat latitude
+     * @param lon longitude
+     */
     public GeoPoint(double lat, double lon) {
         this.lon = lon;
         this.lat = lat;
     }
 
+    /**
+     * Returns the longitude.
+     * @return the longitude
+     */
     public double getLon() {
         return lon;
     }
 
+    /**
+     * Sets the longitude.
+     * @param lon the longitude
+     */
     public void setLon(double lon) {
         this.lon = lon;
     }
 
+    /**
+     * Returns the latitude.
+     * @return the latitude
+     */
     public double getLat() {
         return lat;
     }
 
+    /**
+     * Sets the latitude.
+     * @param lat the latitude
+     */
     public void setLat(double lat) {
         this.lat = lat;
     }

@@ -29,11 +29,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * Base class for injectors that send generated {@link Person} documents to a backend (e.g. console or Elasticsearch).
+ */
 public abstract class Injector implements Closeable {
 
     private static final Logger logger = LogManager.getLogger(Injector.class);
 
     boolean started = false;
+
+    /** Private constructor for abstract base; subclasses provide their own. */
+    protected Injector() {
+    }
 
     /**
      * Start the engine. Check that it's running and prepare what is needed to make it work properly.
@@ -105,6 +112,10 @@ public abstract class Injector implements Closeable {
         return bufferJSON.toString();
     }
 
+    /**
+     * Returns whether this injector has been started successfully.
+     * @return true if started
+     */
     public boolean isStarted() {
         return started;
     }

@@ -38,13 +38,27 @@ import java.util.List;
 
 import static fr.pilato.elasticsearch.injector.helper.SSLUtils.createTrustAllCertsContext;
 
+/**
+ * Injects generated persons into an Elasticsearch cluster via the bulk API.
+ */
 public class ElasticsearchInjector extends Injector {
 
     private static final Logger logger = LogManager.getLogger(ElasticsearchInjector.class);
+    /** Elasticsearch Java API client. */
     private final ElasticsearchClient client;
     private final String index;
+    /** Bulk ingester for batching index requests. */
     private final BulkIngester<Void> ingester;
 
+    /**
+     * Creates an Elasticsearch injector.
+     * @param index target index name
+     * @param bulkSize bulk size
+     * @param host Elasticsearch host URL
+     * @param username basic auth username (deprecated)
+     * @param password basic auth password (deprecated)
+     * @param apikey API key for authentication (optional)
+     */
     public ElasticsearchInjector(String index, int bulkSize, String host, String username, String password, String apikey) {
         logger.info("Using Elasticsearch backend running at {} with bulk size of {} documents in index {}", host, bulkSize, index);
         this.index = index;

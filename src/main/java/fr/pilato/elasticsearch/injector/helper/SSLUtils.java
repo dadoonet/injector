@@ -39,6 +39,10 @@ import java.security.cert.X509Certificate;
  */
 public class SSLUtils {
 
+    /** Private constructor for utility class. */
+    private SSLUtils() {
+    }
+
     /**
      * Create a SSL Context from a Certificate
      * @param certificate Certificate provided as a byte array
@@ -66,6 +70,10 @@ public class SSLUtils {
         @Override public X509Certificate[] getAcceptedIssuers() { return null; }
     }};
 
+    /**
+     * Creates an SSL context that trusts all certificates (for development/demo only).
+     * @return the SSL context
+     */
     public static SSLContext createTrustAllCertsContext() {
         try {
             SSLContext sslContext = SSLContext.getInstance("SSL");

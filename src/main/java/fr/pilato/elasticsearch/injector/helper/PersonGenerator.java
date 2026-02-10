@@ -32,9 +32,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Generates random {@link Person} instances for demo data.
+ */
 public class PersonGenerator {
 
     private static ArrayList<String> names;
+
+    /** Private constructor for utility class. */
+    private PersonGenerator() {
+    }
 
     static {
         try {
@@ -44,6 +51,10 @@ public class PersonGenerator {
         }
     }
 
+    /**
+     * Generates a random person with name, birth date, address and optional marketing data.
+     * @return a new random person
+     */
     public static Person personGenerator() {
         Person person = new Person();
         buildGender(person);

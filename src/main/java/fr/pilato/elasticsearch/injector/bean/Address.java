@@ -19,6 +19,9 @@
 
 package fr.pilato.elasticsearch.injector.bean;
 
+/**
+ * Represents a physical address with country, zip code, city and optional geo location.
+ */
 public class Address {
 
     private String country;
@@ -27,42 +30,86 @@ public class Address {
     private String countrycode;
     private GeoPoint location;
 
+    /** Default constructor for address. */
+    public Address() {
+    }
+
+    /**
+     * Returns the country.
+     * @return the country
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * Sets the country.
+     * @param country the country
+     */
     public void setCountry(String country) {
         this.country = country;
     }
 
+    /**
+     * Returns the zip code.
+     * @return the zip code
+     */
     public String getZipcode() {
         return zipcode;
     }
 
+    /**
+     * Sets the zip code.
+     * @param zipcode the zip code
+     */
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 
+    /**
+     * Returns the city.
+     * @return the city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Sets the city.
+     * @param city the city
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Returns the country code (e.g. FR, DE).
+     * @return the country code
+     */
     public String getCountrycode() {
         return countrycode;
     }
 
+    /**
+     * Sets the country code.
+     * @param countrycode the country code
+     */
     public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
     }
 
+    /**
+     * Returns the geo location.
+     * @return the location or null
+     */
     public GeoPoint getLocation() {
         return location;
     }
 
+    /**
+     * Sets the geo location.
+     * @param location the location
+     */
     public void setLocation(GeoPoint location) {
         this.location = location;
     }

@@ -36,10 +36,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Main entry point to generate person documents and inject them to console or Elasticsearch.
+ */
 public class Generate {
     private static final Logger logger = LogManager.getLogger(Generate.class);
 
+    /** Command-line options for the generate command. */
     public static class GenerateCommand {
+
+        /** Default constructor for JCommander. */
+        public GenerateCommand() {
+        }
+
         // Common options
 
         @Parameter(names = "--debug", description = "Debug mode")
@@ -91,6 +100,14 @@ public class Generate {
         private boolean csPretty = false;
     }
 
+    /** Private constructor for main class. */
+    private Generate() {
+    }
+
+    /**
+     * Main entry point.
+     * @param args command-line arguments (see {@link GenerateCommand})
+     */
     public static void main(String[] args) {
         GenerateCommand commands = new GenerateCommand();
         JCommander jCommander = new JCommander(commands);

@@ -32,8 +32,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  */
 public class MetaParser {
 
+    /** ObjectMapper with pretty-printed JSON output (snake_case). */
     public static final ObjectMapper prettyMapper;
+    /** ObjectMapper for compact JSON output (lower case). */
     public static final ObjectMapper mapper;
+
+    /** Private constructor for utility class. */
+    private MetaParser() {
+    }
 
     static {
         SimpleModule injector = new SimpleModule("injector", new Version(5, 0, 0, null,

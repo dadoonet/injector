@@ -23,7 +23,21 @@ package fr.pilato.elasticsearch.injector.helper;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Reads CSV resources from the classpath.
+ */
 public class CsvReader {
+
+    /** Private constructor for utility class. */
+    private CsvReader() {
+    }
+
+    /**
+     * Returns all lines from a classpath resource as strings.
+     * @param url classpath resource path (e.g. /prenoms.csv)
+     * @return list of lines
+     * @throws IOException if the resource cannot be read
+     */
     public static ArrayList<String> readAsStrings(String url) throws IOException {
         /*returns all of the data in a file as Strings given the File object*/
         ArrayList<String> data = new ArrayList<>();
@@ -40,6 +54,11 @@ public class CsvReader {
         return data;
     }
 
+    /**
+     * Splits a comma-separated line into a list of values.
+     * @param dataLine the line to split
+     * @return list of values between commas
+     */
     public static ArrayList<String> extractFromCommas(String dataLine) {
         //Gives back the data that is found between commas in a String
         ArrayList<String> data = new ArrayList<>();

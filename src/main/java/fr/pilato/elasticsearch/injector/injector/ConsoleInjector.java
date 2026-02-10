@@ -30,14 +30,19 @@ import java.util.Collections;
 import java.util.List;
 
 /**
-    Used to print out every single generated element
+ * Used to print out every single generated element to the console.
  */
 public class ConsoleInjector extends Injector {
 
     private static final Logger logger = LogManager.getLogger(ConsoleInjector.class);
 
+    /** Jackson mapper for serializing persons to JSON (pretty or compact). */
     private final ObjectMapper mapper;
 
+    /**
+     * Creates a console injector.
+     * @param pretty if true, output is pretty-printed JSON
+     */
     public ConsoleInjector(boolean pretty) {
         logger.info("Using Console to generate the dataset with pretty set to {}", pretty);
         mapper = pretty ? MetaParser.prettyMapper : MetaParser.mapper;

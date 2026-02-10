@@ -25,7 +25,9 @@ import fr.pilato.elasticsearch.injector.serializer.CustomDateSerializer;
 
 import java.util.Date;
 
-
+/**
+ * Represents a person with name, birth date, gender, address and optional marketing data.
+ */
 public class Person {
 
     private String name = null;
@@ -38,9 +40,13 @@ public class Person {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Address address;
 
+    /** Default constructor for person. */
+    public Person() {
+    }
 
     /**
      * Gets name.
+     * @return the person's name
      */
     public String getName() {
         return name;
@@ -48,48 +54,89 @@ public class Person {
 
     /**
      * Sets name.
+     * @param name the person's name
      */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the date of birth.
+     * @return the date of birth
+     */
     @JsonSerialize(using = CustomDateSerializer.class)
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
+    /**
+     * Sets the date of birth.
+     * @param dateOfBirth the date of birth
+     */
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    /**
+     * Returns the gender.
+     * @return the gender
+     */
     public String getGender() {
         return gender;
     }
 
+    /**
+     * Sets the gender.
+     * @param gender the gender
+     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
+    /**
+     * Returns the marketing data.
+     * @return the marketing data or null
+     */
     public Marketing getMarketing() {
         return marketing;
     }
 
+    /**
+     * Sets the marketing data.
+     * @param marketing the marketing data
+     */
     public void setMarketing(Marketing marketing) {
         this.marketing = marketing;
     }
 
+    /**
+     * Returns the address.
+     * @return the address or null
+     */
     public Address getAddress() {
         return address;
     }
 
+    /**
+     * Sets the address.
+     * @param address the address
+     */
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    /**
+     * Returns the number of children.
+     * @return the number of children
+     */
     public Integer getChildren() {
         return children;
     }
 
+    /**
+     * Sets the number of children.
+     * @param children the number of children
+     */
     public void setChildren(Integer children) {
         this.children = children;
     }
