@@ -9,6 +9,7 @@ This injector is used to demo
 |:-------------------|:-------------------------|:------------:|
 | ${project.version} | ${elasticsearch.version} |              |
 | 9.3.1              | 9.3.0                    |  2026-02-10  |
+| 9.3*               | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
 | 8.15               | 8.15.1                   |  2024-09-23  |
 | 8.7                | 8.7.0                    |  2023-04-20  |
@@ -49,7 +50,7 @@ This injector is used to demo
 
 ## Status
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/fr.pilato.elasticsearch.injector/injector/)
+[![Maven Central](https://maven-badges.sml.io/sonatype-central/fr.pilato.elasticsearch.injector/injector/badge.svg?style=flat-square)](https://maven-badges.sml.io/sonatype-central/fr.pilato.elasticsearch.injector/injector/)
 [![Build and Deploy the main branch](https://github.com/dadoonet/injector/actions/workflows/main.yml/badge.svg)](https://github.com/dadoonet/injector/actions/workflows/main.yml)
 
 ## Installation
