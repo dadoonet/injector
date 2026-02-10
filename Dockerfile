@@ -18,7 +18,7 @@ RUN native-image -jar app.jar -o injector --no-fallback \
     -H:+ReportExceptionStackTraces
 
 # Stage 3: Alpine with gcompat so glibc-linked binary runs
-FROM alpine:3.19
+FROM alpine:3.23
 RUN apk add --no-cache ca-certificates gcompat
 COPY --from=native-builder /build/injector /opt/injector
 ENTRYPOINT ["/opt/injector"]
