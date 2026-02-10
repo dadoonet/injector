@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 9.3-SNAPSHOT | 9.3.0 |              |
+| 9.3 | 9.3.0 |              |
 | 9.3                | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
 | 8.15               | 8.15.1                   |  2024-09-23  |
@@ -67,7 +67,7 @@ java -jar injector-9.3.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.3-SNAPSHOT/>
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.3/>
 
 ### Docker installation
 
@@ -234,7 +234,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-9.3-SNAPSHOT.jar`. Or:
+Just get the final jar from `target/injector-9.3.jar`. Or:
 
 ```sh
 cd target
