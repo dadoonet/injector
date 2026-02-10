@@ -399,6 +399,16 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.12.0</version>
+                        <configuration>
+                            <!-- tools.jackson.core (Jackson 3) requires this module; add it so javadoc can resolve it -->
+                            <additionalDependencies>
+                                <dependency>
+                                    <groupId>ch.randelshofer</groupId>
+                                    <artifactId>fastdoubleparser</artifactId>
+                                    <version>0.9.0</version>
+                                </dependency>
+                            </additionalDependencies>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
