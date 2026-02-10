@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 9.3 | 9.3.0 |              |
+| 9.4-SNAPSHOT | 9.3.0 |              |
 | 9.3                | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
 | 8.15               | 8.15.1                   |  2024-09-23  |
@@ -67,7 +67,7 @@ java -jar injector-9.3.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.3/>
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.4-SNAPSHOT/>
 
 ### Docker installation
 
@@ -234,7 +234,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-9.3.jar`. Or:
+Just get the final jar from `target/injector-9.4-SNAPSHOT.jar`. Or:
 
 ```sh
 cd target
@@ -279,8 +279,13 @@ If you need to skip the tests, run:
 mvn release:perform -Prelease -Darguments="-DskipTests"
 ```
 
-If everything is ok in <https://central.sonatype.com/artifact/fr.pilato.elasticsearch.injector/injector>, 
-you can confirm the release from the sonatype UI.
+After a while, the release should be available on [maven central](https://central.sonatype.com/artifact/fr.pilato.elasticsearch.injector/injector)
+and [docker hub](https://hub.docker.com/repository/docker/dadoonet/persons-injector/).
+
+It could take some time for the release to be available on maven central, so if you don't see it right away, 
+please be patient and check again later. You can always watch <https://central.sonatype.com/publishing/deployments>
+to confirm that the deployment is still in progress. You need to be authenticated for this and have access to the
+namespace `fr.pilato`.
 
 ## License
 

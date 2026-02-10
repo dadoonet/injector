@@ -59,7 +59,7 @@ The build generates a single Docker image:
 |-----------------------------|--------------------------------------------------------|
 | `dadoonet/persons-injector` | `<project.version>` (e.g. `${project.version}`) and `latest` |
 
-**Base image:** `alpine:3.19` (minimal image; no JVM). The GraalVM native executable is glibc-linked and runs on Alpine via `gcompat`. The binary is built with `-H:+StripDebugInfo` to reduce size.  
+**Base image:** `alpine:3.23` (minimal image; no JVM). The GraalVM native executable is glibc-linked and runs on Alpine via `gcompat`. The binary is built with `-H:+StripDebugInfo` to reduce size.  
 **Entrypoint:** `/opt/injector` — a GraalVM native executable that accepts the same options as the JAR (e.g. `--console`, `--nb`, `--elasticsearch`).
 
 **Examples:**

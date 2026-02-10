@@ -279,8 +279,13 @@ If you need to skip the tests, run:
 mvn release:perform -Prelease -Darguments="-DskipTests"
 ```
 
-If everything is ok in <https://central.sonatype.com/artifact/fr.pilato.elasticsearch.injector/injector>, 
-you can confirm the release from the sonatype UI.
+After a while, the release should be available on [maven central](https://central.sonatype.com/artifact/fr.pilato.elasticsearch.injector/injector)
+and [docker hub](https://hub.docker.com/repository/docker/dadoonet/persons-injector/).
+
+It could take some time for the release to be available on maven central, so if you don't see it right away, 
+please be patient and check again later. You can always watch <https://central.sonatype.com/publishing/deployments>
+to confirm that the deployment is still in progress. You need to be authenticated for this and have access to the
+namespace `fr.pilato`.
 
 ## License
 

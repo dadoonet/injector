@@ -44,7 +44,7 @@ mvn clean package -DskipTests
 
 **Artifacts:**
 
-- **Flattened JAR:** `target/injector-<version>.jar` (e.g. `target/injector-9.3.jar`) — runnable with `java -jar injector-<version>.jar [options]`.
+- **Flattened JAR:** `target/injector-<version>.jar` (e.g. `target/injector-9.4-SNAPSHOT.jar`) — runnable with `java -jar injector-<version>.jar [options]`.
 - **Docker image:** Built by the `docker-maven-plugin` during the `package` phase (see below).
 
 The Docker build uses the `Dockerfile` in the project root. It is a multi-stage build: the first stage builds the JAR with Maven from `pom.xml` and `src/`, the second stage uses GraalVM to produce a native executable from that JAR, and the final stage copies only the native binary into a minimal Alpine runtime image. The image is built by the `docker-maven-plugin` when you run `mvn package` (or `mvn install`); you can also run `docker build .` manually from the project root.
@@ -57,16 +57,16 @@ The build generates a single Docker image:
 
 | Image name                  | Tags produced                                          |
 |-----------------------------|--------------------------------------------------------|
-| `dadoonet/persons-injector` | `<project.version>` (e.g. `9.3`) and `latest` |
+| `dadoonet/persons-injector` | `<project.version>` (e.g. `9.4-SNAPSHOT`) and `latest` |
 
-**Base image:** `alpine:3.19` (minimal image; no JVM). The GraalVM native executable is glibc-linked and runs on Alpine via `gcompat`. The binary is built with `-H:+StripDebugInfo` to reduce size.  
+**Base image:** `alpine:3.23` (minimal image; no JVM). The GraalVM native executable is glibc-linked and runs on Alpine via `gcompat`. The binary is built with `-H:+StripDebugInfo` to reduce size.  
 **Entrypoint:** `/opt/injector` — a GraalVM native executable that accepts the same options as the JAR (e.g. `--console`, `--nb`, `--elasticsearch`).
 
 **Examples:**
 
 ```bash
 # After mvn package / install, run with default Elasticsearch settings
-docker run dadoonet/persons-injector:9.3
+docker run dadoonet/persons-injector:9.4-SNAPSHOT
 
 # Or use the 'latest' tag
 docker run dadoonet/persons-injector:latest
@@ -101,7 +101,7 @@ To confirm the app runs and generates data to the console without Elasticsearch:
 
 ```bash
 mvn clean package -DskipTests
-java -jar target/injector-9.3.jar --console --nb 10
+java -jar target/injector-9.4-SNAPSHOT.jar --console --nb 10
 ```
 
 You should see log lines and 10 generated person documents. Add `--cs.pretty` for pretty-printed JSON.
@@ -115,7 +115,7 @@ To verify that the **Docker image** is functional without needing a running Elas
 mvn clean package -DskipTests
 
 # Run the image with console output only (no Elasticsearch)
-docker run --rm dadoonet/persons-injector:9.3 --console --nb 5
+docker run --rm dadoonet/persons-injector:9.4-SNAPSHOT --console --nb 5
 ```
 
 You should see:
@@ -126,7 +126,7 @@ You should see:
 Optional: use `--cs.pretty` for readable JSON:
 
 ```bash
-docker run --rm dadoonet/persons-injector:9.3 --console --nb 5 --cs.pretty
+docker run --rm dadoonet/persons-injector:9.4-SNAPSHOT --console --nb 5 --cs.pretty
 ```
 
 If this command completes successfully and prints the expected output, the Docker image is working at a minimum level. You can then test the full Elasticsearch path (e.g. with `--elasticsearch` and a real cluster) as needed.
@@ -140,7 +140,7 @@ If this command completes successfully and prints the expected output, the Docke
 | Build (with tests)           | `mvn clean install`                                                       |
 | Build (no tests)             | `mvn clean package -DskipTests`                                           |
 | Run tests only               | `mvn test` or `mvn verify`                                                |
-| Run JAR in console mode      | `java -jar target/injector-9.3.jar --console --nb 10`            |
-| Check Docker image (minimal) | `docker run --rm dadoonet/persons-injector:9.3 --console --nb 5` |
+| Run JAR in console mode      | `java -jar target/injector-9.4-SNAPSHOT.jar --console --nb 10`            |
+| Check Docker image (minimal) | `docker run --rm dadoonet/persons-injector:9.4-SNAPSHOT --console --nb 5` |
 
-All of the above should be run from the project root directory. Replace `9.3` with your actual project version if different (see `pom.xml` or `mvn help:evaluate -Dexpression=project.version -q -DforceStdout`).
+All of the above should be run from the project root directory. Replace `9.4-SNAPSHOT` with your actual project version if different (see `pom.xml` or `mvn help:evaluate -Dexpression=project.version -q -DforceStdout`).
