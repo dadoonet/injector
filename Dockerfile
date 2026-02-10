@@ -1,5 +1,5 @@
 # Stage 1: build JAR with Maven
-FROM maven:3.9-eclipse-temurin-21-alpine AS jar-builder
+FROM maven:3-eclipse-temurin-25-alpine AS jar-builder
 WORKDIR /build
 COPY pom.xml .
 COPY src ./src
