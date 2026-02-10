@@ -87,12 +87,11 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Logging dependencies -->
+        <!-- Logging dependencies: slf4j-api required at runtime by Elasticsearch client (Apache HTTP Client) -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
