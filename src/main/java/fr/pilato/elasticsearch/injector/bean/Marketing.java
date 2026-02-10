@@ -39,92 +39,146 @@ public class Marketing {
     private Integer hifi;
     private Integer food;
 
-    /** @return number of clicks on cars segment */
+    /**
+     * Returns the number of clicks on the cars segment.
+     * @return number of clicks on cars segment
+     */
     public Integer getCars() {
         return cars;
     }
 
-    /** @param cars number of clicks on cars segment */
+    /**
+     * Sets the number of clicks on the cars segment.
+     * @param cars number of clicks on cars segment
+     */
     public void setCars(Integer cars) {
         this.cars = cars;
     }
 
-    /** @return number of clicks on shoes segment */
+    /**
+     * Returns the number of clicks on the shoes segment.
+     * @return number of clicks on shoes segment
+     */
     public Integer getShoes() {
         return shoes;
     }
 
-    /** @param shoes number of clicks on shoes segment */
+    /**
+     * Sets the number of clicks on the shoes segment.
+     * @param shoes number of clicks on shoes segment
+     */
     public void setShoes(Integer shoes) {
         this.shoes = shoes;
     }
 
-    /** @return number of clicks on toys segment */
+    /**
+     * Returns the number of clicks on the toys segment.
+     * @return number of clicks on toys segment
+     */
     public Integer getToys() {
         return toys;
     }
 
-    /** @param toys number of clicks on toys segment */
+    /**
+     * Sets the number of clicks on the toys segment.
+     * @param toys number of clicks on toys segment
+     */
     public void setToys(Integer toys) {
         this.toys = toys;
     }
 
-    /** @return number of clicks on fashion segment */
+    /**
+     * Returns the number of clicks on the fashion segment.
+     * @return number of clicks on fashion segment
+     */
     public Integer getFashion() {
         return fashion;
     }
 
-    /** @param fashion number of clicks on fashion segment */
+    /**
+     * Sets the number of clicks on the fashion segment.
+     * @param fashion number of clicks on fashion segment
+     */
     public void setFashion(Integer fashion) {
         this.fashion = fashion;
     }
 
-    /** @return number of clicks on music segment */
+    /**
+     * Returns the number of clicks on the music segment.
+     * @return number of clicks on music segment
+     */
     public Integer getMusic() {
         return music;
     }
 
-    /** @param music number of clicks on music segment */
+    /**
+     * Sets the number of clicks on the music segment.
+     * @param music number of clicks on music segment
+     */
     public void setMusic(Integer music) {
         this.music = music;
     }
 
-    /** @return number of clicks on garden segment */
+    /**
+     * Returns the number of clicks on the garden segment.
+     * @return number of clicks on garden segment
+     */
     public Integer getGarden() {
         return garden;
     }
 
-    /** @param garden number of clicks on garden segment */
+    /**
+     * Sets the number of clicks on the garden segment.
+     * @param garden number of clicks on garden segment
+     */
     public void setGarden(Integer garden) {
         this.garden = garden;
     }
 
-    /** @return number of clicks on electronic segment */
+    /**
+     * Returns the number of clicks on the electronic segment.
+     * @return number of clicks on electronic segment
+     */
     public Integer getElectronic() {
         return electronic;
     }
 
-    /** @param electronic number of clicks on electronic segment */
+    /**
+     * Sets the number of clicks on the electronic segment.
+     * @param electronic number of clicks on electronic segment
+     */
     public void setElectronic(Integer electronic) {
         this.electronic = electronic;
     }
 
-    /** @return number of clicks on hifi segment */
+    /**
+     * Returns the number of clicks on the hifi segment.
+     * @return number of clicks on hifi segment
+     */
     public Integer getHifi() {
         return hifi;
     }
 
-    /** @param hifi number of clicks on hifi segment */
+    /**
+     * Sets the number of clicks on the hifi segment.
+     * @param hifi number of clicks on hifi segment
+     */
     public void setHifi(Integer hifi) {
         this.hifi = hifi;
     }
 
-    /** @return number of clicks on food segment */
+    /**
+     * Returns the number of clicks on the food segment.
+     * @return number of clicks on food segment
+     */
     public Integer getFood() {
         return food;
     }
 
-    /** @param food number of clicks on food segment */
+    /**
+     * Sets the number of clicks on the food segment.
+     * @param food number of clicks on food segment
+     */
     public void setFood(Integer food) {
         this.food = food;
     }
