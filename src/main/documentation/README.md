@@ -252,7 +252,19 @@ mvn clean process-resources
 git commit -a -m "Document the stable version"
 ```
 
-To release the project you need to run the release plugin with the `release` profile as you need to sign the artifacts:
+To release the project you to use the `release` profile as you need to sign the artifacts.
+
+First step is to check that everything is building correctly (javadoc, sources):
+
+```sh
+mvn clean install -Prelease
+# Or if you want to skip the tests
+mvn clean install -Prelease -DskipTests
+# And if you already know that Docker is building correctly, you can also skip it
+mvn clean install -Prelease -DskipTests -Ddocker.skip
+```
+
+Then you can run the following commands to prepare and perform the release:
 
 ```sh
 mvn release:prepare
