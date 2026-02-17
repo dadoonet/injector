@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 9.3.1 | 9.3.0 |              |
+| 9.4-SNAPSHOT | 9.3.0 |              |
 | 9.3.1              | 9.3.0                    |  2026-02-10  |
 | 9.3*               | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
@@ -68,7 +68,7 @@ java -jar injector-9.3.1.jar
 ```
 
 If you are looking for a SNAPSHOT version, please look into
-<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.3.1/>
+<https://s01.oss.sonatype.org/content/repositories/snapshots/fr/pilato/elasticsearch/injector/injector/9.4-SNAPSHOT/>
 
 ### Docker installation
 
@@ -227,7 +227,7 @@ If you want to update to a new elasticsearch server version, modify `pom.xml` fi
 If you want to manually update to a new elasticsearch client version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch-client.version>9.3.0</elasticsearch-client.version>
+<elasticsearch-client.version>9.3.1</elasticsearch-client.version>
 ```
 
 Then compile the project:
@@ -237,7 +237,7 @@ Then compile the project:
 mvn clean install
 ```
 
-Just get the final jar from `target/injector-9.3.1.jar`. Or:
+Just get the final jar from `target/injector-9.4-SNAPSHOT.jar`. Or:
 
 ```sh
 cd target
