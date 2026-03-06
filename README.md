@@ -227,7 +227,7 @@ If you want to update to a new elasticsearch server version, modify `pom.xml` fi
 If you want to manually update to a new elasticsearch client version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch-client.version>9.3.0</elasticsearch-client.version>
+<elasticsearch-client.version>9.3.2</elasticsearch-client.version>
 ```
 
 Then compile the project:
