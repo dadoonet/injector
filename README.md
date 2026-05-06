@@ -7,7 +7,7 @@ This injector is used to demo
 
 | Injector           | elasticsearch            | Release date |
 |:-------------------|:-------------------------|:------------:|
-| 9.4-SNAPSHOT | 9.3.2 |              |
+| 9.4-SNAPSHOT | 9.4.0 |              |
 | 9.3.1              | 9.3.0                    |  2026-02-10  |
 | 9.3*               | 9.3.0                    |  2026-02-09  |
 | 8.16               | 8.16.1                   |  2024-12-09  |
@@ -221,7 +221,7 @@ The command-line interface is implemented with [Picocli](https://picocli.info/).
 If you want to update to a new elasticsearch server version, modify `pom.xml` file:
 
 ```xml
-<elasticsearch.version>9.3.2</elasticsearch.version>
+<elasticsearch.version>9.4.0</elasticsearch.version>
 ```
 
 If you want to manually update to a new elasticsearch client version, modify `pom.xml` file:
