@@ -37,9 +37,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.compiler.version>21</java.compiler.version>
 
-        <elasticsearch.version>9.5.4</elasticsearch.version>
+        <elasticsearch.version>9.5.5</elasticsearch.version>
         <elasticsearch-client.version>9.5.5</elasticsearch-client.version>
-        <jackson.version>2.22.3</jackson.version>
+        <jackson.version>2.22.4</jackson.version>
         <log4j.version>2.26.1</log4j.version>
         <slf4j.version>2.0.20</slf4j.version>
         <junit.version>6.1.3</junit.version>
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.20.0</version>
+            <version>3.21.0</version>
         </dependency>
 
         <dependency>
@@ -252,7 +252,7 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.11.0</version>
+                <version>0.12.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <autoPublish>true</autoPublish>
